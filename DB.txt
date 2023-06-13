@@ -1,0 +1,35 @@
+===============================
+
+create table user (
+uId int auto_increment primary key,
+id varchar(255),
+pwd varchar(255),
+email varchar(255),
+name varchar(255),
+birth varchar(255),
+nickname varchar(255)
+);
+
+===============================
+
+create table profile (
+pId int auto_increment primary key,
+pName varchar(255),
+pBirth varchar(255),
+pSex varchar(255),
+uId int,
+piId int,
+foreign key (uId) references user (uId),
+foreign key (piId) references profileImg (piId)
+);
+
+===============================
+
+create table profileImg (
+piId int auto_increment primary key,
+pi_name varchar(255),
+pi_path varchar(255),
+pi_type varchar(255),
+pi_size int,
+pId int
+);

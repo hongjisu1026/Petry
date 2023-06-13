@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -12,9 +12,9 @@
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
-        v2.0 | 20110126
-        License: none (public domain)
-        */
+            v2.0 | 20110126
+            License: none (public domain)
+            */
         html,
         body,
         div,
@@ -168,7 +168,7 @@
 
         .wrapper {
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             position: relative;
         }
 
@@ -251,54 +251,122 @@
             background-color: #ccc;
         }
 
-        .yes-profile {
-            display: none;
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-right: 30px;
         }
+
+        .content-wrapper {
+            padding: 50px;
+        }
+
+        .profiles {
+            width: max-content;
+            max-width: 1300px;
+            margin: auto;
+            padding-top: 50px;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 550px;
+            margin-bottom: 100px;
+        }
+
+        .profile-wrapper:nth-child(even) {
+            margin-left: 195px;
+        }
+
+        .profile-wrapper img, .p-wrapper {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .p-wrapper p {
+            margin-bottom: 10px;
+            font-size: large;
+        }
+
+        .p-wrapper p:first-child, .p-wrapper p:nth-child(2) {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .fa-pen {
+            position: absolute;
+            right: 0;
+            font-size: 1.5em;
+            padding: 20px 10px;
+            cursor: pointer;
+        }
+
+        .fa-plus {
+            font-size: 2em;
+            float: right;
+            cursor: pointer;
+        }
+        
     </style>
 </head>
 
 <body>
-<form action="album.do" method="post">
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo">
-                <a href="./main.jsp">로고</a>
-            </div>
-            <div class="menu-wrapper">
-                <i class="fa-solid fa-bars menu-ic"></i>
-                <div class="menu">
-                    <a href="./diary.jsp" class="menu-ic-wrapper">
-                        <i class="fa-solid fa-book-bookmark"></i>
-                        <p>다이어리</p>
-                    </a>
-                    <a href="./album.jsp" class="menu-ic-wrapper">
-                        <i class="fa-solid fa-image"></i>
-                        <p>앨범</p>
-                    </a>
-                    <a href="./setting.jsp" class="menu-ic-wrapper">
-                        <i class="fa-solid fa-gear"></i>
-                        <p>설정</p>
-                    </a>
+    <form action="diary.do" method="post">
+        <div class="wrapper">
+            <div class="header">
+                <div class="logo">
+                    <a href="./main.jsp">로고</a>
+                </div>
+                <div class="menu-wrapper">
+                    <i class="fa-solid fa-bars menu-ic"></i>
+                    <div class="menu">
+                        <a href="./diary.jsp" class="menu-ic-wrapper">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            <p>다이어리</p>
+                        </a>
+                        <a href="./album.jsp" class="menu-ic-wrapper">
+                            <i class="fa-solid fa-image"></i>
+                            <p>앨범</p>
+                        </a>
+                        <a href="./setting.jsp" class="menu-ic-wrapper">
+                            <i class="fa-solid fa-gear"></i>
+                            <p>설정</p>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="content-wrapper">
+            <div class="content-wrapper">
+                <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
+                <div class="profiles">
 
+                    <div class="profile-wrapper">
+                        <img src="./assets/images/shushu2.jpg" class="pImg">
+                        <div class="p-wrapper">
+                            <p class="pName">슈슈</p>
+                            <p class="pSex">♂</p>
+                            <p class="pBirth">2021년 04월 22일</p>
+                        </div>
+                        <a href="./profile.jsp"><i class="fa-solid fa-pen"></i></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="footer">
+                <p>푸터입니다</p>
+            </div>
         </div>
-        <div class="footer">
-            <p>푸터입니다</p>
-        </div>
-    </div>
-</form>
-<script type="text/javascript">
-    $('.menu-ic').click(function (e) {
-        e.stopPropagation();
-        $('.menu').toggle();
-    });
-    $(document).click(function () {
-        $('.menu').hide();
-    });
-</script>
+    </form>
+    <script type="text/javascript">
+        $('.menu-ic').click(function (e) {
+            e.stopPropagation();
+            $('.menu').toggle();
+        });
+        $(document).click(function () {
+            $('.menu').hide();
+        });
+    </script>
 </body>
 
 </html>

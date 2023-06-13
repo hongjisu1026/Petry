@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
-    <title>petry</title>
+    <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
         v2.0 | 20110126

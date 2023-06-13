@@ -11,7 +11,7 @@
     <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <title>petry</title>
+    <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
         v2.0 | 20110126

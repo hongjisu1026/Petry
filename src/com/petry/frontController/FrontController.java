@@ -1,6 +1,12 @@
 package com.petry.frontController;
 
 import com.petry.command.*;
+import com.petry.profile.command.ProfileCommand;
+import com.petry.user.command.FindIdCommand;
+import com.petry.user.command.FindPwdCommand;
+import com.petry.user.command.LoginOKCommand;
+import com.petry.user.command.RegisterOKCommand;
+import com.petry.user.dto.UserDTO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -72,6 +78,11 @@ public class FrontController extends HttpServlet {
                 } else {
                     viewPage = "findError.jsp";
                 }
+                break;
+            case "/profile.do":
+                command = new ProfileCommand();
+                command.excute(request, response);
+                viewPage = "profileList.jsp";
                 break;
         }
 

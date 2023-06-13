@@ -227,6 +227,7 @@
         }
 
         .submit {
+            font-family: 'Cafe24SsurroundAir';
             width: 305px;
             border: solid 1px #F2C8B0;
             background-color: #fff;

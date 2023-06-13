@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
-    <title>petry</title>
+    <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
         v2.0 | 20110126
@@ -251,8 +251,24 @@
             background-color: #ccc;
         }
 
-        .yes-profile {
-            display: none;
+        .content-wrapper {
+            padding: 50px;
+        }
+
+        li {
+            list-style: url(./assets/icon/paw-solid.svg);
+            margin-bottom: 50px;
+            font-size: 1.5em;
+        }
+
+        li:hover {
+            font-size: 2em;
+            transition: .5s;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -283,7 +299,12 @@
             </div>
         </div>
         <div class="content-wrapper">
-
+            <ul>
+                <li><a href="./profileList.jsp">프로필</a></li>
+                <li><a href="">정보 수정</a></li>
+                <li><a href="">로그아웃</a></li>
+                <li><a href="">회원 탈퇴</a></li>
+            </ul>
         </div>
         <div class="footer">
             <p>푸터입니다</p>
