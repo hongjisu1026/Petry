@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.petry.profile.dto.ProfileImgDTO" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -313,7 +315,7 @@
 </head>
 
 <body>
-    <form action="diary.do" method="post">
+    <form action="profileList.do" method="post">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
@@ -340,17 +342,20 @@
             <div class="content-wrapper">
                 <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
                 <div class="profiles">
+                    <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
+                        <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
+                            <div class="profile-wrapper">
+                                <img class="pImg" src="./assets/images/profile/${profileImg.piName}">
 
-                    <div class="profile-wrapper">
-                        <img src="./assets/images/shushu2.jpg" class="pImg">
-                        <div class="p-wrapper">
-                            <p class="pName">슈슈</p>
-                            <p class="pSex">♂</p>
-                            <p class="pBirth">2021년 04월 22일</p>
-                        </div>
-                        <a href="./profile.jsp"><i class="fa-solid fa-pen"></i></a>
-                    </div>
-
+                                <div class="p-wrapper">
+                                    <p class="pName">${profile.pName}</p>
+                                    <p class="pSex">${profile.pSex}</p>
+                                    <p class="pBirth">${profile.pBirth}</p>
+                                </div>
+                                <a href="./profile.jsp?pId=${profile.pId}&piId=${profileImg.piId}"><i class="fa-solid fa-pen"></i></a>
+                            </div>
+                        </c:forEach>
+                    </c:forEach>
                 </div>
             </div>
             <div class="footer">
@@ -366,6 +371,7 @@
         $(document).click(function () {
             $('.menu').hide();
         });
+
     </script>
 </body>
 

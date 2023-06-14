@@ -74,6 +74,7 @@ public class UserDAO {
             pstmt.setString(2, dto.getPwd());
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
+                dto.setuId(rs.getInt("uId"));
                 dto.setId(rs.getString("id"));
                 dto.setPwd(rs.getString("pwd"));
                 dto.setEmail(rs.getString("email"));

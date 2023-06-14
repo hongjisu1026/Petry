@@ -300,7 +300,7 @@
         </div>
         <div class="content-wrapper">
             <ul>
-                <li><a href="./profileList.jsp">프로필</a></li>
+                <li><a href="./profileList.do">프로필</a></li>
                 <li><a href="">정보 수정</a></li>
                 <li><a href="">로그아웃</a></li>
                 <li><a href="">회원 탈퇴</a></li>

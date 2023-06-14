@@ -374,8 +374,9 @@
         }
 
         .submit {
+            display: inline-block;
             font-family: 'Cafe24SsurroundAir';
-            width: 290px;
+            width: 140px;
             border: solid 1px #F2C8B0;
             background-color: #fff;
             border-radius: 7px;
@@ -389,7 +390,7 @@
 </head>
 
 <body>
-    <form action="profile.do" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
@@ -438,7 +439,8 @@
                             <input type="file" name="pImg" id="pImg" accept=".png, .jpeg, .jpg">
                         </div>
                         <div class="input-wrapper">
-                            <input type="submit" value="등록하기" class="submit">
+                            <input type="submit" value="수정하기" class="submit" formaction="updateProfile.do">
+                            <input type="submit" value="삭제하기" class="submit" id="delete" formaction="deleteProfile.do">
                         </div>
                     </div>
                 </div>
@@ -478,6 +480,8 @@
         document.getElementById('pImg').addEventListener("change", e => {
             readImg(e.target);
         });
+
+        console.log(window.location.search);
     </script>
 </body>
 

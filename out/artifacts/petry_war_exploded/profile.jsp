@@ -366,7 +366,7 @@
             height: 500px;
         }
 
-        #profileImg {
+        #prevImg {
             width: 500px;
             height: 500px;
             border-radius: 50%;
@@ -435,7 +435,7 @@
                             </div>
                         </div>
                         <div class="input-wrapper">
-                            <input type="file" name="pImg" id="pImg">
+                            <input type="file" name="pImg" id="pImg" accept=".png, .jpeg, .jpg">
                         </div>
                         <div class="input-wrapper">
                             <input type="submit" value="등록하기" class="submit">
@@ -444,7 +444,7 @@
                 </div>
                 <div class="item-wrapper">
                     <div class="img-wrapper">
-                        <img id="profileImg">
+                        <img id="prevImg">
                     </div>
                 </div>
             </div>
@@ -460,6 +460,23 @@
         });
         $(document).click(function () {
             $('.menu').hide();
+        });
+
+        function readImg(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('prevImg').src = e.target.result;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById('prevImg').src = '';
+            }
+        }
+
+        document.getElementById('pImg').addEventListener("change", e => {
+            readImg(e.target);
         });
     </script>
 </body>

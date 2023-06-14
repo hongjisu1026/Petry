@@ -374,8 +374,9 @@
         }
 
         .submit {
+            display: inline-block;
             font-family: 'Cafe24SsurroundAir';
-            width: 290px;
+            width: 140px;
             border: solid 1px #F2C8B0;
             background-color: #fff;
             border-radius: 7px;
@@ -385,11 +386,16 @@
         .submit:hover {
             background-color: #F2C8B0;
         }
+
+        #loadProfile {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <form action="profile.do" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
+        <input type="submit" formaction="loadProfile.do" id="loadProfile">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
@@ -438,7 +444,8 @@
                             <input type="file" name="pImg" id="pImg" accept=".png, .jpeg, .jpg">
                         </div>
                         <div class="input-wrapper">
-                            <input type="submit" value="등록하기" class="submit">
+                            <input type="submit" value="수정하기" class="submit" formaction="updateProfile.do">
+                            <input type="submit" value="삭제하기" class="submit" formaction="deleteProfile.do">
                         </div>
                     </div>
                 </div>
@@ -454,6 +461,10 @@
         </div>
     </form>
     <script type="text/javascript">
+        (() => {
+            tt();
+        })();
+
         $('.menu-ic').click(function (e) {
             e.stopPropagation();
             $('.menu').toggle();
@@ -478,6 +489,27 @@
         document.getElementById('pImg').addEventListener("change", e => {
             readImg(e.target);
         });
+
+        function tt() {
+            let url = window.location.href;
+            const index = url.indexOf("?") + 1;
+            url = url.substring(index);
+
+            let pId = url.split("&")[0];
+            let piId = url.split("&")[1];
+
+            pId = pId.split("=")[1];
+            piId = piId.split("=")[1];
+
+            <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
+            <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
+                if (${profile.pId} === pId && ${profileImg.piId} === piId) {
+                    document.getElementById("pName").value = ${profile.pName};
+                    document.getElementById("")
+            }
+            </c:forEach>
+            </c:forEach>
+        }
     </script>
 </body>
 

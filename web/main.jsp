@@ -281,6 +281,7 @@
         .profile img {
             border-radius: 100%;
             width: 200px;
+            height: 200px;
             margin-bottom: 10px;
         }
 
@@ -336,63 +337,43 @@
 </head>
 
 <body>
-<form action="main.do" method="post">
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo">
-                <a href="./main.jsp">로고</a>
-            </div>
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">
+            <a href="./main.jsp">로고</a>
+        </div>
 
-            <div class="menu-wrapper">
-                <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
-                <div class="overlay" id="menu">
-                    <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-book-bookmark"></i>
-                            <p>다이어리</p>
-                        </a>
-                        <a href="./album.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-image"></i>
-                            <p>앨범</p>
-                        </a>
-                        <a href="./setting.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-gear"></i>
-                            <p>설정</p>
-                        </a>
-                    </div>
+        <div class="menu-wrapper">
+            <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
+            <div class="overlay" id="menu">
+                <div class="menu">
+                    <a href="./diary.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                        <p>다이어리</p>
+                    </a>
+                    <a href="./album.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-image"></i>
+                        <p>앨범</p>
+                    </a>
+                    <a href="./setting.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-gear"></i>
+                        <p>설정</p>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="content-wrapper">
+    </div>
+    <div class="content-wrapper">
+        <form action="main.do" method="post" id="form">
             <div class="profile-wrapper">
-                <div class="profile">
-                    <img src="./assets/images/shushu.png">
-                    <p>슈슈 ♂</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/lulu.png">
-                    <p>루루 ♀</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/lulu.png">
-                    <p>루루 ♀</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/lulu.png">
-                    <p>루루 ♀</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/lulu.png">
-                    <p>루루 ♀</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/lulu.png">
-                    <p>루루 ♀</p>
-                </div>
-                <div class="profile">
-                    <img src="./assets/images/shushu.png">
-                    <p>슈슈 ♂</p>
-                </div>
+                <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
+                    <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
+                        <div class="profile">
+                            <img src="./assets/images/profile/${profileImg.piName}">
+                            <p>${profile.pName} ${profile.pSex}</p>
+                        </div>
+                    </c:forEach>
+                </c:forEach>
                 <div class="more" onclick="showMore()">
                     <i class="fa-solid fa-ellipsis"></i>
                 </div>
@@ -400,31 +381,31 @@
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </div>
-            <div class="img-wrapper">
-                <div class="center" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
-                    <div class="img">
-                        <h3>1</h3>
-                    </div>
-                    <div class="img">
-                        <h3>2</h3>
-                    </div>
-                    <div class="img">
-                        <h3>3</h3>
-                    </div>
-                    <div class="img">
-                        <h3>4</h3>
-                    </div>
-                    <div class="img">
-                        <h3>5</h3>
-                    </div>
+        </form>
+        <div class="img-wrapper">
+            <div class="center" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
+                <div class="img">
+                    <h3>1</h3>
+                </div>
+                <div class="img">
+                    <h3>2</h3>
+                </div>
+                <div class="img">
+                    <h3>3</h3>
+                </div>
+                <div class="img">
+                    <h3>4</h3>
+                </div>
+                <div class="img">
+                    <h3>5</h3>
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <p>푸터입니다</p>
-        </div>
     </div>
-</form>
+    <div class="footer">
+        <p>푸터입니다</p>
+    </div>
+</div>
 
 <script type="text/javascript">
     (() => {
@@ -438,6 +419,10 @@
     $(document).click(function () {
         $('.menu').hide();
     });
+
+    function start() {
+        document.getElementById("form").submit();
+    }
 
     function hideMore() {
         const count = $('.profile').length;

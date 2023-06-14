@@ -1,7 +1,10 @@
 package com.petry.frontController;
 
 import com.petry.command.*;
+import com.petry.profile.command.DeleteProfileCommand;
+import com.petry.profile.command.LoadProfileCommand;
 import com.petry.profile.command.ProfileCommand;
+import com.petry.profile.command.UpdateProfileCommand;
 import com.petry.user.command.FindIdCommand;
 import com.petry.user.command.FindPwdCommand;
 import com.petry.user.command.LoginOKCommand;
@@ -55,6 +58,8 @@ public class FrontController extends HttpServlet {
                 boolean check = loginCommand.excute(request, response);
                 if (check) {
                     viewPage = "main.jsp";
+                    command = new LoadProfileCommand();
+                    command.excute(request, response);
                 } else {
                     viewPage = "loginError.jsp";
                 }
@@ -83,6 +88,30 @@ public class FrontController extends HttpServlet {
                 command = new ProfileCommand();
                 command.excute(request, response);
                 viewPage = "profileList.jsp";
+                break;
+            case "/profileList.do":
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                viewPage = "profileList.jsp";
+                break;
+            case "/updateProfile.do":
+                command = new UpdateProfileCommand();
+                command.excute(request, response);
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                viewPage = "profileList.jsp";
+                break;
+            case "/deleteProfile.do":
+                command = new DeleteProfileCommand();
+                command.excute(request, response);
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                viewPage = "profileList.jsp";
+                break;
+            case "/loadProfile.do":
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                viewPage = "profileUpdate.jsp";
                 break;
         }
 

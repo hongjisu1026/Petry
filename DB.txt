@@ -17,19 +17,19 @@ pId int auto_increment primary key,
 pName varchar(255),
 pBirth varchar(255),
 pSex varchar(255),
-uId int,
-piId int,
+uId int not null,
+piId int not null,
 foreign key (uId) references user (uId),
-foreign key (piId) references profileImg (piId)
+foreign key (piId) references profileimg (piId)
 );
+
 
 ===============================
 
 create table profileImg (
 piId int auto_increment primary key,
-pi_name varchar(255),
-pi_path varchar(255),
-pi_type varchar(255),
-pi_size int,
-pId int
+piName varchar(255),
+piPath varchar(255),
+piType varchar(255),
+piSize int
 );

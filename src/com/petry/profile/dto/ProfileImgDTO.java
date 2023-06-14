@@ -16,6 +16,7 @@ public class ProfileImgDTO {
         this.piId = piId;
     }
 
+
     public String getPiName() {
         return piName;
     }

@@ -6,10 +6,12 @@ import com.petry.command.Command;
 import com.petry.profile.dao.ProfileDAO;
 import com.petry.profile.dto.ProfileDTO;
 import com.petry.profile.dto.ProfileImgDTO;
+import com.petry.user.dto.UserDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -19,6 +21,11 @@ public class ProfileCommand implements Command {
         ProfileDAO dao = ProfileDAO.getProfileDAO();
         ProfileDTO dto = new ProfileDTO();
         ProfileImgDTO imgDTO = new ProfileImgDTO();
+
+        HttpSession session = request.getSession();
+        UserDTO userDTO = (UserDTO) session.getAttribute("userInfo");
+        int uId = userDTO.getuId();
+        int piId = 0;
 
         String element = "";
         String piName = "";
@@ -41,18 +48,24 @@ public class ProfileCommand implements Command {
 
         System.out.println(piName + " " + piType + " " + piSize);
 
-        String pName = mr.getParameter("pName");
-        String pBirth = mr.getParameter("pBirth");
-        String pSex = mr.getParameter("pSex");
-
         imgDTO.setPiName(piName);
         imgDTO.setPiPath(piPath);
         imgDTO.setPiType(piType);
         imgDTO.setPiSize(piSize);
 
-        dao.uploadProfileImg(imgDTO);
+        int imgResult = dao.uploadProfileImg(imgDTO);
+        piId = dao.selectPiId(imgDTO).getPiId();
 
-        int result = dao.inputProfile(pName, pBirth, pSex);
+        String pName = mr.getParameter("pName");
+        String pBirth = mr.getParameter("pBirth");
+        String pSex = mr.getParameter("pSex");
 
+        dto.setpName(pName);
+        dto.setpBirth(pBirth);
+        dto.setpSex(pSex);
+        dto.setuId(uId);
+        dto.setPiId(piId);
+
+        dao.inputProfile(dto);
     }
 }
