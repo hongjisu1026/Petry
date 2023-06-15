@@ -4,12 +4,7 @@ import com.petry.command.*;
 import com.petry.profile.command.DeleteProfileCommand;
 import com.petry.profile.command.LoadProfileCommand;
 import com.petry.profile.command.ProfileCommand;
-import com.petry.profile.command.UpdateProfileCommand;
-import com.petry.user.command.FindIdCommand;
-import com.petry.user.command.FindPwdCommand;
-import com.petry.user.command.LoginOKCommand;
-import com.petry.user.command.RegisterOKCommand;
-import com.petry.user.dto.UserDTO;
+import com.petry.user.command.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -84,19 +79,24 @@ public class FrontController extends HttpServlet {
                     viewPage = "findError.jsp";
                 }
                 break;
+            case "/logout.do":
+                command = new LogoutCommand();
+                command.excute(request, response);
+                viewPage = "index.jsp";
+                break;
+            case "/main.do":
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                viewPage = "main.jsp";
+                break;
             case "/profile.do":
                 command = new ProfileCommand();
                 command.excute(request, response);
-                viewPage = "profileList.jsp";
-                break;
-            case "/profileList.do":
                 command = new LoadProfileCommand();
                 command.excute(request, response);
                 viewPage = "profileList.jsp";
                 break;
-            case "/updateProfile.do":
-                command = new UpdateProfileCommand();
-                command.excute(request, response);
+            case "/profileList.do":
                 command = new LoadProfileCommand();
                 command.excute(request, response);
                 viewPage = "profileList.jsp";
@@ -108,11 +108,7 @@ public class FrontController extends HttpServlet {
                 command.excute(request, response);
                 viewPage = "profileList.jsp";
                 break;
-            case "/loadProfile.do":
-                command = new LoadProfileCommand();
-                command.excute(request, response);
-                viewPage = "profileUpdate.jsp";
-                break;
+
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

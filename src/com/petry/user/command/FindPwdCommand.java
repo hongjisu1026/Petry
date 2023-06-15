@@ -18,8 +18,6 @@ public class FindPwdCommand implements FindCommand {
         String id = request.getParameter("pId");
         String email = request.getParameter("pEmail");
 
-        System.out.println(dao.findPwd(id, email));
-
         return dao.findPwd(id, email);
     }
 }

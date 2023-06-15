@@ -183,9 +183,12 @@
             left: 20px;
         }
 
-        .logo a {
-            text-decoration: none;
+        #logo {
             color: #F2C8B0;
+            font-size: 30px;
+            font-family: 'Cafe24SsurroundAir';
+            background-color: white;
+            border: none;
         }
 
         .menu-wrapper {
@@ -385,15 +388,19 @@
         .submit:hover {
             background-color: #F2C8B0;
         }
+
+        #temp {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <form action="profile.do" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
-                    <a href="./main.jsp">로고</a>
+                    <input type="submit" formaction="main.do" id="logo" value="로고">
                 </div>
                 <div class="menu-wrapper">
                     <i class="fa-solid fa-bars menu-ic"></i>
@@ -438,7 +445,7 @@
                             <input type="file" name="pImg" id="pImg" accept=".png, .jpeg, .jpg">
                         </div>
                         <div class="input-wrapper">
-                            <input type="submit" value="등록하기" class="submit">
+                            <input type="submit" value="등록하기" class="submit" formaction="profile.do">
                         </div>
                     </div>
                 </div>

@@ -183,9 +183,12 @@
             left: 20px;
         }
 
-        .logo a {
-            text-decoration: none;
+        #logo {
             color: #F2C8B0;
+            font-size: 30px;
+            font-family: 'Cafe24SsurroundAir';
+            background-color: white;
+            border: none;
         }
 
         .menu-wrapper {
@@ -270,15 +273,20 @@
             color: black;
             text-decoration: none;
         }
+
+        #temp, .submit {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-<form action="setting.do" method="post">
+<form method="post">
+    <input type="submit" id="temp" formaction="setting.do">
     <div class="wrapper">
         <div class="header">
             <div class="logo">
-                <a href="./main.jsp">로고</a>
+                <input type="submit" formaction="main.do" id="logo" value="로고">
             </div>
             <div class="menu-wrapper">
                 <i class="fa-solid fa-bars menu-ic"></i>
@@ -302,9 +310,10 @@
             <ul>
                 <li><a href="./profileList.do">프로필</a></li>
                 <li><a href="">정보 수정</a></li>
-                <li><a href="">로그아웃</a></li>
+                <li><a id="logoutBtn">로그아웃</a></li>
                 <li><a href="">회원 탈퇴</a></li>
             </ul>
+            <input type="submit" class="submit" id="logout" formaction="logout.do">
         </div>
         <div class="footer">
             <p>푸터입니다</p>
@@ -320,6 +329,9 @@
     $(document).click(function () {
         $('.menu').hide();
     });
+    $('#logoutBtn').click(function () {
+        $('#logout').submit();
+    })
 </script>
 </body>
 

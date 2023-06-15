@@ -1,5 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.petry.profile.dto.ProfileImgDTO" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -165,6 +163,7 @@
         }
 
         body {
+            position: relative;
             font-family: 'Cafe24SsurroundAir';
         }
 
@@ -185,9 +184,12 @@
             left: 20px;
         }
 
-        .logo a {
-            text-decoration: none;
+        #logo {
             color: #F2C8B0;
+            font-size: 30px;
+            font-family: 'Cafe24SsurroundAir';
+            background-color: white;
+            border: none;
         }
 
         .menu-wrapper {
@@ -297,7 +299,7 @@
             margin-right: 5px;
         }
 
-        .fa-pen {
+        .fa-minus {
             position: absolute;
             right: 0;
             font-size: 1.5em;
@@ -310,16 +312,70 @@
             float: right;
             cursor: pointer;
         }
+
+        #temp {
+            display: none;
+        }
+
+        .submit {
+            display: inline-block;
+            font-family: 'Cafe24SsurroundAir';
+            width: 130px;
+            font-size: large;
+            border: solid 1px #F2C8B0;
+            background-color: #fff;
+            border-radius: 7px;
+            margin: 10px;
+            padding: 5px;
+        }
+
+        .submit:hover {
+            background-color: #F2C8B0;
+        }
+
+        .popup-overlay {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        .delete-wrapper {
+            position: absolute;
+            background-color: white;
+            width: 400px;
+            text-align: center;
+            padding: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: solid #F2C8B0 1px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .delete-wrapper p {
+            margin-bottom: 20px;
+            color: #F2C8B0;
+            font-size: 1.5em;
+        }
         
     </style>
 </head>
 
 <body>
-    <form action="profileList.do" method="post">
+    <form method="post">
+        <input type="submit" formaction="profileList.do" id="temp">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
-                    <a href="./main.jsp">로고</a>
+                    <input type="submit" formaction="main.do" id="logo" value="로고">
                 </div>
                 <div class="menu-wrapper">
                     <i class="fa-solid fa-bars menu-ic"></i>
@@ -342,8 +398,8 @@
             <div class="content-wrapper">
                 <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
                 <div class="profiles">
-                    <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
-                        <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
+                    <c:forEach var="profile" items="${profile}" varStatus="status">
+                        <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
                             <div class="profile-wrapper">
                                 <img class="pImg" src="./assets/images/profile/${profileImg.piName}">
 
@@ -352,7 +408,7 @@
                                     <p class="pSex">${profile.pSex}</p>
                                     <p class="pBirth">${profile.pBirth}</p>
                                 </div>
-                                <a href="./profile.jsp?pId=${profile.pId}&piId=${profileImg.piId}"><i class="fa-solid fa-pen"></i></a>
+                                <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i class="fa-solid fa-minus"></i></a>
                             </div>
                         </c:forEach>
                     </c:forEach>
@@ -361,7 +417,18 @@
             <div class="footer">
                 <p>푸터입니다</p>
             </div>
+
+            <div class="popup-overlay" id="popup">
+                <div class="delete-wrapper">
+                    <p>정말 삭제하시겠습니까?</p>
+                    <input type="hidden" name="pId" id="pId">
+                    <input type="hidden" name="piId" id="piId">
+                    <input type="submit" value="예" class="submit" id="yes" formaction="deleteProfile.do">
+                    <input type="button" value="아니오" id="no" class="submit">
+                    </div>
+            </div>
         </div>
+        
     </form>
     <script type="text/javascript">
         $('.menu-ic').click(function (e) {
@@ -371,6 +438,26 @@
         $(document).click(function () {
             $('.menu').hide();
         });
+
+        function popup(pId) {
+            const target = document.getElementById('btnDelete').getAttribute('href');
+            $(target).addClass('show');
+
+            document.getElementById('pId').value = pId;
+            test()
+        }
+
+        function test() {
+            console.log(document.getElementById('pId').value);
+        }
+
+        $('#no').click(function () {
+            $('.popup-overlay').removeClass('show');
+        });
+
+        (() => {
+            $('#temp').submit();
+        })();
 
     </script>
 </body>

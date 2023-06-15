@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ProfileDAO {
     private static ProfileDAO profileDAO = new ProfileDAO();
@@ -34,9 +33,8 @@ public class ProfileDAO {
         return profileDAO;
     }
 
-    public int inputProfile(ProfileDTO dto) {
+    public void insertProfile(ProfileDTO dto) {
         String SQL = "INSERT INTO " + PROFILE + " (pName, pBirth, pSex, uId, piId) VALUES (?, ?, ?, ?, ?)";
-        int result = 0;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, dto.getpName());
@@ -44,100 +42,157 @@ public class ProfileDAO {
             pstmt.setString(3, dto.getpSex());
             pstmt.setInt(4, dto.getuId());
             pstmt.setInt(5, dto.getPiId());
+            System.out.println(dto.getPiId());
 
-            result = pstmt.executeUpdate();
+            int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return result;
     }
 
-    public int uploadProfileImg(ProfileImgDTO dto) {
-        String SQL = "INSERT INTO " + PROFILE_IMG + " (piName, piPath, piType, piSize) VALUES (?, ?, ?, ?)";
-        int result = 0;
+    public int insertProfileImg(ProfileImgDTO dto) {
+        String SQL = "INSERT INTO " + PROFILE_IMG + " (piName, piOriName, piPath, piType, piSize) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, dto.getPiName());
-            pstmt.setString(2, dto.getPiPath());
-            pstmt.setString(3, dto.getPiType());
-            pstmt.setLong(4, dto.getPiSize());
+            pstmt.setString(2, dto.getPiOriName());
+            pstmt.setString(3, dto.getPiPath());
+            pstmt.setString(4, dto.getPiType());
+            pstmt.setLong(5, dto.getPiSize());
 
-            result = pstmt.executeUpdate();
+            int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return result;
+        return selectPiIdToPiName(dto);
     }
 
-    public ProfileImgDTO selectPiId(ProfileImgDTO dto) {
-        String SQL = "SELECT piId FROM " + PROFILE_IMG + " WHERE piName = ? AND piPath = ? AND piType = ? AND piSize = ?";
+    public int selectPiIdToPiName(ProfileImgDTO dto) {
+        int piId = 0;
+        String SQL = "SELECT piId FROM " + PROFILE_IMG + " WHERE piName = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, dto.getPiName());
-            pstmt.setString(2, dto.getPiPath());
-            pstmt.setString(3, dto.getPiType());
-            pstmt.setLong(4, dto.getPiSize());
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                dto.setPiId(rs.getInt("piId"));
-            } else {
-                dto = null;
+                piId = rs.getInt("piId");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return dto;
+        return piId;
     }
 
-    public ProfileDTO loadProfile(int uId, int piId) {
-        String SQL = "SELECT * FROM " + PROFILE + " WHERE uId = ? AND piId = ?";
-        ProfileDTO dto = new ProfileDTO();
+    public ArrayList<ProfileDTO> selectProfile(int uId) {
+        ArrayList<ProfileDTO> list = new ArrayList<>();
+        String SQL = "SELECT * FROM " + PROFILE + " WHERE uId = ?";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-            pstmt.setInt(1, uId);
-            pstmt.setInt(2, piId);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                dto.setpId(rs.getInt("pId"));
-                dto.setpName(rs.getString("pName"));
-                dto.setpBirth(rs.getString("pBirth"));
-                dto.setpSex(rs.getString("pSex"));;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return dto;
-    }
-
-    public ArrayList<ProfileImgDTO> loadProfileImg() {
-        String SQL = "SELECT * FROM " + PROFILE_IMG;
-        ArrayList<ProfileImgDTO> list = new ArrayList<>();
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);;
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                ProfileImgDTO dto = new ProfileImgDTO();
+                ProfileDTO dto = new ProfileDTO();
+                dto.setpId(rs.getInt("pId"));
+                dto.setpName(rs.getString("pName"));
+                dto.setpBirth(rs.getString("pBirth"));
+                dto.setpSex(rs.getString("pSex"));
                 dto.setPiId(rs.getInt("piId"));
-                dto.setPiName(rs.getString("piName"));
-                dto.setPiPath(rs.getString("piPath"));
-                dto.setPiType(rs.getString("piType"));
-                dto.setPiSize(rs.getLong("piSize"));
                 list.add(dto);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
+    }
+
+    public ProfileImgDTO selectProfileImg(int piId) {
+        String SQL = "SELECT * FROM " + PROFILE_IMG + " WHERE piId = ?";
+        ProfileImgDTO dto = new ProfileImgDTO();
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, piId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                dto.setPiId(rs.getInt("piId"));
+                dto.setPiName(rs.getString("piName"));
+                dto.setPiPath(rs.getString("piPath"));
+                dto.setPiType(rs.getString("piType"));
+                dto.setPiSize(rs.getLong("piSize"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dto;
+    }
+
+    public String deleteProfile(ProfileDTO dto) {
+        String SQL = "DELETE FROM " + PROFILE + " WHERE pId = ? AND uId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, dto.getpId());
+            pstmt.setInt(2, dto.getuId());
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(selectPiId(dto));
+        deleteProfileImg(selectPiId(dto));
+        return selectPiName(selectPiId(dto));
+    }
+
+    public int selectPiId(ProfileDTO dto) {
+        int piId = 0;
+        String SQL = "SELECT piId FROM " + PROFILE + " WHERE pId = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, dto.getpId());
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                piId = rs.getInt("piId");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return piId;
+    }
+
+    public void deleteProfileImg(int piId) {
+        String SQL = "DELETE FROM " + PROFILE_IMG + " WHERE piId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, piId);
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String selectPiName(int piId) {
+        String piName = null;
+        String SQL = "SELECT piName FROM " + PROFILE_IMG + " WHERE piId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstm = conn.prepareStatement(SQL)) {
+            pstm.setInt(1, piId);
+
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                piName = rs.getString("piName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return piName;
     }
 
 

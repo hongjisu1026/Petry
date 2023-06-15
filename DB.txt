@@ -20,15 +20,15 @@ pSex varchar(255),
 uId int not null,
 piId int not null,
 foreign key (uId) references user (uId),
-foreign key (piId) references profileimg (piId)
+foreign key (piId) references profileImg (piId)
 );
-
 
 ===============================
 
 create table profileImg (
 piId int auto_increment primary key,
 piName varchar(255),
+piOriName varhchar(255),
 piPath varchar(255),
 piType varchar(255),
 piSize int

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Random;
 
 public class ProfileCommand implements Command {
     @Override
@@ -25,10 +26,10 @@ public class ProfileCommand implements Command {
         HttpSession session = request.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("userInfo");
         int uId = userDTO.getuId();
-        int piId = 0;
 
         String element = "";
         String piName = "";
+        String piOriName = "";
         String piType = "";
         String piPath = "E:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
         long piSize = 0;
@@ -40,8 +41,8 @@ public class ProfileCommand implements Command {
 
         if (files.hasMoreElements()) {
             element = (String) files.nextElement();
-
-            piName = mr.getFilesystemName(element);
+            piName = random();
+            piOriName = mr.getFilesystemName(element);
             piType = mr.getContentType(element);
             piSize = mr.getFile(element).length();
         }
@@ -49,12 +50,12 @@ public class ProfileCommand implements Command {
         System.out.println(piName + " " + piType + " " + piSize);
 
         imgDTO.setPiName(piName);
+        imgDTO.setPiOriName(piOriName);
         imgDTO.setPiPath(piPath);
         imgDTO.setPiType(piType);
         imgDTO.setPiSize(piSize);
 
-        int imgResult = dao.uploadProfileImg(imgDTO);
-        piId = dao.selectPiId(imgDTO).getPiId();
+        int piId = dao.insertProfileImg(imgDTO);
 
         String pName = mr.getParameter("pName");
         String pBirth = mr.getParameter("pBirth");
@@ -66,6 +67,19 @@ public class ProfileCommand implements Command {
         dto.setuId(uId);
         dto.setPiId(piId);
 
-        dao.inputProfile(dto);
+        dao.insertProfile(dto);
+    }
+
+    public String random() {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+        char[] chs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        for (int i = 0; i < 16; i++) {
+            builder.append(chs[random.nextInt(chs.length)]);
+        }
+
+        return builder.toString();
     }
 }

@@ -1,4 +1,4 @@
-package com.petry.profile.command;
+package com.petry.user.command;
 
 import com.petry.command.Command;
 
@@ -7,9 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UpdateProfileCommand implements Command {
+public class LogoutCommand implements Command {
     @Override
     public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().invalidate();
 
     }
 }

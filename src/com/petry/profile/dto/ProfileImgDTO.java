@@ -3,6 +3,7 @@ package com.petry.profile.dto;
 public class ProfileImgDTO {
     private int piId;
     private String piName;
+    private String piOriName;
     private String piPath;
     private String piType;
     private long piSize;
@@ -16,13 +17,20 @@ public class ProfileImgDTO {
         this.piId = piId;
     }
 
-
     public String getPiName() {
         return piName;
     }
 
     public void setPiName(String piName) {
         this.piName = piName;
+    }
+
+    public String getPiOriName() {
+        return piOriName;
+    }
+
+    public void setPiOriName(String piOriName) {
+        this.piOriName = piOriName;
     }
 
     public String getPiPath() {

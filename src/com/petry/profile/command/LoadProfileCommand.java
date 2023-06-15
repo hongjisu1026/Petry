@@ -22,12 +22,12 @@ public class LoadProfileCommand implements Command {
         UserDTO userDTO = (UserDTO) session.getAttribute("userInfo");
         int uId = userDTO.getuId();
 
-        ArrayList<ProfileImgDTO> profileImg = dao.loadProfileImg();
-        ArrayList<ProfileDTO> profile = new ArrayList<>();
-        for (ProfileImgDTO images : profileImg) {
-            int piId = images.getPiId();
-            profile.add(dao.loadProfile(uId, piId));
-            System.out.println(dao.loadProfile(uId, piId).getpId());
+        ArrayList<ProfileImgDTO> profileImg = new ArrayList<>();
+        ArrayList<ProfileDTO> profile = dao.selectProfile(uId);
+
+        for (ProfileDTO profiles : profile) {
+            int pId = profiles.getpId();
+            profileImg.add(dao.selectProfileImg(pId));
         }
 
         request.setAttribute("profile", profile);
