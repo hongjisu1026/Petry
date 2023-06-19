@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Random;
@@ -38,13 +39,19 @@ public class ProfileCommand implements Command {
         System.out.println("경로 : " + piPath);
 
         Enumeration<?> files = mr.getFileNames();
-
         if (files.hasMoreElements()) {
             element = (String) files.nextElement();
-            piName = random();
-            piOriName = mr.getFilesystemName(element);
-            piType = mr.getContentType(element);
+            piOriName = mr.getOriginalFileName(element);
+            piType = mr.getContentType(element).split("/")[1];
             piSize = mr.getFile(element).length();
+        }
+
+        piName = random() + "." + piType;
+
+        if (piOriName != null) {
+            File oldFile = new File(piPath + "\\" + piOriName);
+            File newFile = new File(piPath + "\\" + piName);
+            oldFile.renameTo(newFile);
         }
 
         System.out.println(piName + " " + piType + " " + piSize);

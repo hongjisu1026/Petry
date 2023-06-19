@@ -84,6 +84,11 @@ public class FrontController extends HttpServlet {
                 command.excute(request, response);
                 viewPage = "index.jsp";
                 break;
+            case "/delete.do":
+                command = new DeleteCommand();
+                command.excute(request, response);
+                viewPage = "index.jsp";
+                break;
             case "/main.do":
                 command = new LoadProfileCommand();
                 command.excute(request, response);

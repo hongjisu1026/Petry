@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jstl">
+    <CLASSES>
+      <root url="jar://C:/tamcat9/lib/jstl.jar!/" />
+      <root url="jar://C:/tamcat9/lib/standard.jar!/" />
+      <root url="jar://C:/tamcat9/lib/cos-2020.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

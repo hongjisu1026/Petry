@@ -223,11 +223,8 @@
         }
 
         #logo {
-            font-size: 2em;
-            text-align: center;
-            margin-top: 50px;
-            color: #F2C8B0;
-            cursor: pointer;
+            border: none;
+            width: 100px;
         }
     </style>
 </head>
@@ -235,7 +232,7 @@
 <body>
 <form action="register.do" method="post" id="form">
     <div class="wrapper">
-        <p id="logo" onclick="move()">로고</p>
+        <input type="image" id="logo" formaction="index.do"  src="./assets/logo.png">
         <div class="table-wrapper">
             <table>
                 <tr>

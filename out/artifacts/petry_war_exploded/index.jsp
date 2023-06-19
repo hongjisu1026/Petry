@@ -201,11 +201,8 @@
         }
 
         #logo {
-            font-size: 2em;
-            text-align: center;
-            margin: 10px;
-            color: #F2C8B0;
-            cursor: pointer;
+            border: none;
+            width: 100px;
         }
 
         input {
@@ -314,7 +311,7 @@
     </div>
     <div class="inner-wrapper">
         <div class="content-wrapper">
-            <p id="logo" onclick="move()">로고</p>
+            <input type="image" src="./assets/logo.png" id="logo" onclick="move()">
             <form action="login.do" method="post" id="form">
                 <input type="text" name="userId" id="userId" placeholder="아이디" data-name="아이디">
                 <input type="password" name="userPwd" id="userPwd" placeholder="비밀번호" data-name="비밀번호">

@@ -28,7 +28,7 @@ foreign key (piId) references profileImg (piId)
 create table profileImg (
 piId int auto_increment primary key,
 piName varchar(255),
-piOriName varhchar(255),
+piOriName varchar(255),
 piPath varchar(255),
 piType varchar(255),
 piSize int

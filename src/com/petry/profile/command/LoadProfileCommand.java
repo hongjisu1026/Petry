@@ -26,8 +26,16 @@ public class LoadProfileCommand implements Command {
         ArrayList<ProfileDTO> profile = dao.selectProfile(uId);
 
         for (ProfileDTO profiles : profile) {
-            int pId = profiles.getpId();
-            profileImg.add(dao.selectProfileImg(pId));
+            int piId = profiles.getPiId();
+            profileImg.add(dao.selectProfileImg(piId));
+        }
+
+        for (ProfileDTO p : profile) {
+            System.out.println(p.getpId());
+        }
+        System.out.println("================");
+        for (ProfileImgDTO p : profileImg) {
+            System.out.println(p.getPiName());
         }
 
         request.setAttribute("profile", profile);

@@ -26,7 +26,7 @@ public class DeleteProfileCommand implements Command {
         dto.setuId(uId);
         dto.setpId(pId);
 
-        String piName = dao.deleteProfile(dto);
+        String piName = dao.selectPiName(dto);
         String piPath = "E:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
         File file = new File(piPath + "\\" + piName);
 
@@ -39,6 +39,8 @@ public class DeleteProfileCommand implements Command {
         } else {
             System.out.println("파일이 존재하지 않음");
         }
+
+        dao.deleteProfile(dto);
 
     }
 }

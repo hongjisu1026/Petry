@@ -186,11 +186,8 @@
         }
 
         #logo {
-            color: #F2C8B0;
-            font-size: 30px;
-            font-family: 'Cafe24SsurroundAir';
-            background-color: white;
             border: none;
+            width: 100px;
         }
 
         .menu-wrapper {
@@ -349,7 +346,7 @@
     <div class="wrapper">
         <div class="header">
             <div class="logo">
-                <input type="submit" formaction="main.do" id="logo" value="로고">
+                <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
             </div>
 
             <div class="menu-wrapper">
@@ -375,8 +372,8 @@
         <div class="content-wrapper">
             <form action="main.do" method="post" id="form">
                 <div class="profile-wrapper">
-                    <c:forEach var="profile" items="${profile}" varStatus="status">
-                        <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
+                    <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
+                        <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
                             <div class="profile">
                                 <img src="./assets/images/profile/${profileImg.piName}">
                                 <p>${profile.pName} ${profile.pSex}</p>
@@ -500,6 +497,11 @@
             ]
         });
     });
+
+    (() => {
+        $('#temp').submit();
+        console.log('.do 실행');
+    })();
 
 
 </script>

@@ -185,11 +185,8 @@
         }
 
         #logo {
-            color: #F2C8B0;
-            font-size: 30px;
-            font-family: 'Cafe24SsurroundAir';
-            background-color: white;
             border: none;
+            width: 100px;
         }
 
         .menu-wrapper {
@@ -371,11 +368,11 @@
 
 <body>
     <form method="post">
-        <input type="submit" formaction="profileList.do" id="temp">
+        <input type="submit" formenctype="multipart/form-data" formaction="profileList.do" id="temp">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
-                    <input type="submit" formaction="main.do" id="logo" value="로고">
+                    <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
                 </div>
                 <div class="menu-wrapper">
                     <i class="fa-solid fa-bars menu-ic"></i>
@@ -398,11 +395,12 @@
             <div class="content-wrapper">
                 <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
                 <div class="profiles">
-                    <c:forEach var="profile" items="${profile}" varStatus="status">
-                        <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
-                            <div class="profile-wrapper">
-                                <img class="pImg" src="./assets/images/profile/${profileImg.piName}">
 
+                        <c:forEach var="profile" items="${profile}" varStatus="status">
+                            <div class="profile-wrapper">
+                                <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
+                                    <img class="pImg" src="./assets/images/profile/${profileImg.piName}">
+                                </c:forEach>
                                 <div class="p-wrapper">
                                     <p class="pName">${profile.pName}</p>
                                     <p class="pSex">${profile.pSex}</p>
@@ -410,7 +408,6 @@
                                 </div>
                                 <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i class="fa-solid fa-minus"></i></a>
                             </div>
-                        </c:forEach>
                     </c:forEach>
                 </div>
             </div>
@@ -457,6 +454,7 @@
 
         (() => {
             $('#temp').submit();
+            console.log('.do 실행');
         })();
 
     </script>

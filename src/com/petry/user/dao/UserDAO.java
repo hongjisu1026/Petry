@@ -166,4 +166,18 @@ public class UserDAO {
 
         return pwd;
     }
+
+    public void deleteUser(int uId) {
+        String SQL = "DELETE FROM " + TABLE_NAME + " WHERE uId=?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

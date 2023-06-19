@@ -132,7 +132,7 @@ public class ProfileDAO {
         return dto;
     }
 
-    public String deleteProfile(ProfileDTO dto) {
+    public void deleteProfile(ProfileDTO dto) {
         String SQL = "DELETE FROM " + PROFILE + " WHERE pId = ? AND uId = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -145,7 +145,6 @@ public class ProfileDAO {
         }
         System.out.println(selectPiId(dto));
         deleteProfileImg(selectPiId(dto));
-        return selectPiName(selectPiId(dto));
     }
 
     public int selectPiId(ProfileDTO dto) {
@@ -178,8 +177,9 @@ public class ProfileDAO {
         }
     }
 
-    public String selectPiName(int piId) {
+    public String selectPiName(ProfileDTO dto) {
         String piName = null;
+        int piId = selectPiId(dto);
         String SQL = "SELECT piName FROM " + PROFILE_IMG + " WHERE piId = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstm = conn.prepareStatement(SQL)) {
