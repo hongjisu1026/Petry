@@ -33,3 +33,26 @@ piPath varchar(255),
 piType varchar(255),
 piSize int
 );
+
+===============================
+
+create table diary (
+dId int primary key auto_increment,
+dTitle varchar(255),
+dContent varchar(2000),
+dUploadTime datetime default now()
+);
+
+===============================
+
+create table album (
+aId int primary key auto_increment,
+aName varchar(255),
+aOriName varchar(255),
+aPath varchar(255),
+aType varchar(255),
+aSize int,
+aUploadTile datetime default now(),
+dId int not null,
+foreign key (dId) references diary (dId)
+);

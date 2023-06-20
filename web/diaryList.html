@@ -216,6 +216,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -348,38 +349,80 @@
             margin-left: 5px;
         }
 
+        .detail-img {
+            height: 300px;
+        }
+
         .img {
             width: 100%;
             height: 300px;
-            background-color: #ccc;
             text-align: center;
         }
 
         .img img {
             height: 300px;
-            
+            margin: auto;
         }
 
-        .detail-img {
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            border: none;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .slick-prev {
+            background: url(./assets/icon/circle-chevron-left-solid.svg) no-repeat;
+            left: 10px;
+        }
+
+        .slick-next {
+            background: url(./assets/icon/circle-chevron-right-solid.svg) no-repeat;
+            right: 10px;
+        }
+
+        .detail i {
             position: relative;
+            float: right;
+            font-size: 3em;
         }
 
-        #prevBtn {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            margin: 0 10px;
+        .diary-menu-wrapper {
+            position: relative;
+            float: right;
         }
 
-        #nextBtn {
+        .diary-menu {
+            display: none;
             position: absolute;
+            width: 150px;
+            border: 1px solid #F2C8B0;
+            padding: 20px;
+            border-radius: 5px;
             right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            margin: 0 10px;
+            top: 50px;
+            background-color: white;
+            text-align: center;
+            z-index: 999;
         }
 
+        .submit-diary-menu {
+            background-color: white;
+            font-size: 1.3em;
+            font-family: 'Cafe24SsurroundAir';
+            color: #F2C8B0;
+            padding: 5px 10px;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+
+        .submit-diary-menu:hover {
+            font-size: 1.5em;
+        }
 
     </style>
 </head>
@@ -467,19 +510,29 @@
         </div>
         <div class="ditail-wrapper">
             <div class="detail">
+                <div class="diary-menu-wrapper">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="diary-menu" id="diaryMenu">
+                        <a href="./updateDiary.do" class="submit-diary-menu">수정</a>
+                        <a href="./deleteDiary.do" class="submit-diary-menu">삭제</a>
+                    </div>
+                </div>
                 <p id="detailTitle">하이</p>
-                <div class="detail-img">
-                    <img src="./assets/icon/circle-chevron-left-solid.svg" id="prevBtn">
-                    <div class="img">
-                        <img src="./assets/images/lulu.jpg" alt="1">
+                <div class="img-wrapper">
+                    <div class="detail-img">
+                        <div class="img">
+                            <img src="./assets/images/lulu.jpg">
+                        </div>
+                        <div class="img">
+                            <img src="./assets/images/lulu2.jpg">
+                        </div>
+                        <div class="img">
+                            <img src="./assets/images/shushu.jpg">
+                        </div>
+                        <div class="img">
+                            <img src="./assets/images/shushu2.jpg">
+                        </div>
                     </div>
-                    <div class="img">
-                        <img src="./assets/images/lulu2.jpg" alt="1">
-                    </div>
-                    <div class="img">
-                        <img src="./assets/images/shushu.jpg" alt="1">
-                    </div>
-                    <img src="./assets/icon/circle-chevron-right-solid.svg" id="nextBtn">
                 </div>
                 <p id="detailContent">하이요</p>
             </div>
@@ -497,45 +550,28 @@
     $(document).click(function () {
         $('.menu').hide();
     });
-    let index = 0;
 
-    $('#nextBtn').click(function () {
-        const length = document.getElementsByClassName('img').length;
-        const imgDiv = document.getElementsByClassName('img');
-        const next = document.getElementById('nextBtn');
-        const prev = document.getElementById('prevBtn');
-        index ++;
+    $(document).ready(function() {
+        $('.detail-img').slick({
+            arrows: true,
+            prevArrow: "<button type='button' class='slick-prev'>&nbsp;</button>",
+            nextArrow: "<button type='button' class='slick-next'>&nbsp;</button>",
+        });
 
-        if (index === 1) {
-            prev.style.display = 'block';
-        }
-        if (index + 1 < length) {
-            for (let i = 0; i < index; i++) {
-                imgDiv[i].style.display = 'none';
-            }
-            for (let i = index; i < length; i++) {
-                imgDiv[i].style.display = 'none';
-            }
-            imgDiv[index].style.display = 'block';
-        } else if (index + 1 === length) {
-            for (let i = 0; i < length; i++) {
-                imgDiv[i].style.display = 'none';
-            }
-            imgDiv[index].style.display = 'block';
-            next.style.display = 'none';
-        }
-        
-        
     });
 
-    (() => {
-        for (let i = 1; i < document.getElementsByClassName('img').length; i++) {
-            document.getElementsByClassName('img')[i].style.display = 'none';
-        }
-    })
+    $('.fa-ellipsis').click(function (e) {
+        e.stopPropagation();
+        $('.diary-menu').toggle();
+    });
+
+    $(document).click(function () {
+        $('.diary-menu').hide();
+    });
+
+
 
     
-
 </script>
 </body>
 
