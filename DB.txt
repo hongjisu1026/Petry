@@ -52,7 +52,8 @@ aOriName varchar(255),
 aPath varchar(255),
 aType varchar(255),
 aSize int,
-aUploadTile datetime default now(),
+aUploadTime datetime default now(),
+aThumbnail int,
 dId int not null,
 foreign key (dId) references diary (dId)
 );

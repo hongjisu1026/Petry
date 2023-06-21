@@ -1,6 +1,7 @@
 package com.petry.frontController;
 
 import com.petry.command.*;
+import com.petry.diary.command.DiaryCommand;
 import com.petry.profile.command.DeleteProfileCommand;
 import com.petry.profile.command.LoadProfileCommand;
 import com.petry.profile.command.ProfileCommand;
@@ -113,6 +114,10 @@ public class FrontController extends HttpServlet {
                 command.excute(request, response);
                 viewPage = "profileList.jsp";
                 break;
+            case "/diary.do":
+                command = new DiaryCommand();
+                command.excute(request, response);
+                viewPage = "diaryList.jsp";
 
         }
 

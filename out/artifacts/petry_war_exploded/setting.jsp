@@ -288,7 +288,7 @@
             <div class="menu-wrapper">
                 <i class="fa-solid fa-bars menu-ic"></i>
                 <div class="menu">
-                    <a href="./diary.jsp" class="menu-ic-wrapper">
+                    <a href="./diaryList.jsp" class="menu-ic-wrapper">
                         <i class="fa-solid fa-book-bookmark"></i>
                         <p>다이어리</p>
                     </a>

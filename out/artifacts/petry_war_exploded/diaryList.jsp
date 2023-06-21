@@ -1,5 +1,5 @@
-<!-- <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> -->
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -170,7 +170,7 @@
 
         .wrapper {
             width: calc(100vw - 17px);
-            height: calc(100vh - 200px);  
+            min-height: calc(100vh - 100px);
         }
 
         .header {
@@ -216,6 +216,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -252,7 +253,7 @@
             height: 100px;
             background-color: #ccc;
             position: relative;
-            transform: translateY(calc(-100% + 200px));
+            transform: translateY(-100% + 100px);
         }
 
         #temp {
@@ -261,7 +262,7 @@
 
         #writeBtn {
             float: right;
-            margin: 30px;
+            margin: 20px;
             text-decoration: none;
             color: black;
             border: 1px solid #F2C8B0;
@@ -276,20 +277,11 @@
         }
 
         .diary-wrapper {
-            position: relative;
-            width: 1700px;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 70px;
-            margin: auto;
-        }
-
-        .btn-wrapper, .diary-wrapper {
-            display: block;
-        }
-
-        .diary-wrapper {
-            height: auto;
+            width: calc(50% - 100px);
+            float: left;
+            overflow: auto;
+            height: calc(100vh - 220px);
+            padding: 20px 50px;
         }
 
         .diary-img {
@@ -326,157 +318,171 @@
         }
 
         .diary {
-            display: inline-block;
             margin-top: 30px;
-            width: 800px;
         }
 
-        
+        .wrapper, .footer {
+            display: block;
+        }
 
-        input[type='file'] {
-            float: left;
-            font-family: 'Cafe24SsurroundAir';
-            padding: 5px;
+        .detail-wrapper {
+            width: 50%;
+            float: right;
+            height: calc(100vh - 220px);
+            overflow: auto;
+        }
+
+        .detail {
+            padding: 20px 30px;
             margin: auto;
-            border: none;
-            height: 40px;
         }
 
-        input[type='file']::file-selector-button {
-            width: 150px;
-            height: 30px;
-            border: 2px solid #F2C8B0;
-            border-radius: 10%;
-            margin-top: 4.5px;
-            background-color: white;
-            font-family: 'Cafe24SsurroundAir';
+        #detailTitle {
+            font-size: 2em;
+            margin-bottom: 20px;
+            margin-left: 5px;
+        }
+
+        #detailContent {
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-left: 5px;
+        }
+
+        .detail-img {
+            height: 300px;
+        }
+
+        .img {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+        }
+
+        .img img {
+            height: 300px;
+            margin: auto;
+        }
+
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            border: none;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .slick-prev {
+            background: url(./assets/icon/circle-chevron-left-solid.svg) no-repeat;
+            left: 10px;
+        }
+
+        .slick-next {
+            background: url(./assets/icon/circle-chevron-right-solid.svg) no-repeat;
+            right: 10px;
+        }
+
+        .detail i {
+            position: relative;
+            float: right;
+            font-size: 3em;
+        }
+
+        .diary-menu-wrapper {
+            position: relative;
             float: right;
         }
 
-        input[type='file']::file-selector-button:hover {
-            background-color: #F2C8B0;
-        }
-
-        input, textarea {
-            display: block;
-            height: 30px;
-            width: 290px;
-            margin-bottom: 15px;
-            margin-left: 1px;
-            border: solid 1px #bbb;
+        .diary-menu {
+            display: none;
+            position: absolute;
+            width: 150px;
+            border: 1px solid #F2C8B0;
+            padding: 20px;
             border-radius: 5px;
-            padding-left: 10px;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            text-align: center;
+            z-index: 999;
         }
 
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #F2C8B0;
-            box-shadow: none;
-            text-shadow: none;
+        .submit-diary-menu {
+            background-color: white;
+            font-size: 1.3em;
+            font-family: 'Cafe24SsurroundAir';
+            color: #F2C8B0;
+            padding: 5px 10px;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+
+        .submit-diary-menu:hover {
+            font-size: 1.5em;
         }
 
         .submit {
+            display: inline-block;
             font-family: 'Cafe24SsurroundAir';
-            width: 290px;
-            border: solid 2px #F2C8B0;
+            width: 130px;
+            font-size: large;
+            border: solid 1px #F2C8B0;
             background-color: #fff;
             border-radius: 7px;
-            margin-top: 10px;
-            float: right;
+            margin: 10px;
+            padding: 5px;
         }
 
         .submit:hover {
             background-color: #F2C8B0;
         }
 
-        #diaryTitle {
-            width: 1200px;
-        }
-
-        #diaryContent {
-            width: 1200px;
-            height: 400px;
-        }
-
-        .content-wrapper {
-            position: relative;
-            width: 100%;
-            height: inherit;
-        }
-
-        .input-wrapper {
-            position: absolute;
-            width: max-content;
-            height: max-content;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .prev-wrapper {
-            position: relative;
-            width: 1210px;
-            height: 150px;
-            border: 2px solid #F2C8B0;
-            border-radius: 5px;
-        }
-
-        .prev-img {
-            position: absolute;
-            width: max-content;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);       
-        }
-
-        .img {
-            margin: 10px;
-            position: relative;
-            width: min-content;
-            display: inline-block;
-        }
-
-        .img img {
-            height: 120px;
-        }
-
-        .slick-dots {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .slick-dots li {
-            width: 50px;
-            margin: 0;
-            display: inline-block;
-            height: 5px;
-            background-color: #ccc;
-        }
-
-        .slick-dots button {
+        .popup-overlay {
             display: none;
-        }
-
-        .slick-dots .slick-active {
-            background-color: #F2C8B0;
-        }
-
-        .img i {
+            z-index: 1000;
+            width: 100vw;
+            height: 100vh;
             position: absolute;
-            right: 0;
-            font-size: 1.1em;
-            margin: 5px;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        .confirm {
+            position: absolute;
+            background-color: white;
+            width: 400px;
+            text-align: center;
+            padding: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: solid #F2C8B0 1px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .confirm p {
+            margin-bottom: 20px;
+            color: #F2C8B0;
+            font-size: 1.5em;
+        }
+
+        .confirm i {
+            position: absolute;
+            color: #F2C8B0;
+            right: 20px;
+            top: 20px;
+            font-size: larger;
             cursor: pointer;
         }
 
-        .img i:hover {
-            font-size: 1.2em;
-            margin: 4px;
-        }
-
-        
     </style>
 </head>
 
@@ -488,11 +494,12 @@
             <div class="logo">
                 <input type="image" id="logo" src="./assets/logo.png" formaction="main.do">
             </div>
+
             <div class="menu-wrapper">
                 <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
                 <div class="overlay" id="menu">
                     <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
+                        <a href="./diaryList.jsp" class="menu-ic-wrapper">
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
@@ -508,25 +515,41 @@
                 </div>
             </div>
         </div>
-        <div class="content-wrapper">
-            <div class="input-wrapper">
-                <div class="title">
-                    <input type="text" id="diaryTitle" name="diaryTitle" placeholder="제목을 입력해주세요.">
+        <a id="writeBtn" href="./diary.jsp">글쓰기</a>
+        <div class="diary-wrapper">
+            <div class="diary">
+                <img class="diary-img" src="./assets/images/lulu.jpg">
+                <div class="diary-content-wrapper">
+                    <p class="diary-title"><a href="">하이</a></p>
+                    <p class="diary-content">하이요</p>
                 </div>
-                <div class="content">
-                    <textarea id="diaryContent" name="diaryContetn"></textarea>
+            </div>
             
-                </div>
-                <div class="prev">
-                    <div class="prev-wrapper">
-                        <div class="prev-img">
-
-                        </div>
+        </div>
+        <div class="detail-wrapper">
+            <div class="detail">
+                <div class="diary-menu-wrapper">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="diary-menu" id="diaryMenu">
+                        <a href="./updateDiary.do" class="submit-diary-menu">수정</a>
+                        <a href="#confirm" class="submit-diary-menu">삭제</a>
                     </div>
-                    <input type="file" name="diaryImg" id="diaryImg" accept=".png, .jpeg, .jpg" multiple>
-                    <input type="submit" class="submit" value="작성">
                 </div>
-                
+                <p id="detailTitle"></p>
+                <div class="img-wrapper">
+                    <div class="detail-img">
+                        
+                    </div>
+                </div>
+                <p id="detailContent"></p>
+            </div>
+        </div>
+        <div class="popup-overlay" id="confirm">
+            <div class="confirm">
+                <i class="fa-solid fa-xmark"></i>
+                <p>정말 삭제하시겠습니까?</p>
+                <input type="submit" value="예" class="submit" id="yes" formaction="deleteDiary.do">
+                <input type="button" value="아니오" id="no" class="submit">
             </div>
         </div>
     </div>
@@ -535,7 +558,13 @@
     </div>
 </form>
 <script type="text/javascript">
-    let sel_file = [];
+    (() => {
+        if ($('.img').length === 0) {
+            document.getElementsByClassName('detail')[0].style.display = 'none';
+        } else {
+            document.getElementsByClassName('detail')[0].style.display = 'block';
+        }
+    })();
 
     $('.menu-ic').click(function (e) {
         e.stopPropagation();
@@ -545,56 +574,47 @@
         $('.menu').hide();
     });
 
-
-    $(document).ready(function () {
-        $('#diaryImg').on('change', prevImg);
-    });
-
-    function prevImg(e) {
-        const files = e.target.files;
-        const filesArr = Array.prototype.slice.call(files);
-
-        if (filesArr.length > 10) {
-            alert('파일은 최대 10개까지 업로드 할 수 있습니다.');
-            $('#diaryImg').val("");
-            return;
-        } else {
-            let index = 0;
-            filesArr.forEach(function (f) {
-                if (!f.type.match("image.*")) {
-                    alert('이미지만 업로드 할 수 있습니다.');
-                    $('#diaryImg').val("");
-                    return;
-                }
-                sel_file.push(f);
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img_html = "<div class=\"img\"><i class=\"fa-solid fa-xmark\" onclick=\"deletePrevImg(" + index + ")\"></i><img src=\"" + e.target.result + "\" /></div>";
-                    $('.prev-img').append(img_html);
-                    index ++;
-                }
-
-                reader.readAsDataURL(f);
-            });
-        }
-    }
-
-    function deletePrevImg(index) {
-        sel_file.splice(index, 1);
-        $('.img').eq(index).remove();
-
-        const dt = new DataTransfer();
-        let files = $('#diaryImg')[0].files;
-        let fileArr = Array.from(files);
-        fileArr.splice(index, 1);
-
-        fileArr.forEach(file => {
-            dt.items.add(file);
+    $(document).ready(function() {
+        $('.detail-img').slick({
+            arrows: true,
+            prevArrow: "<button type='button' class='slick-prev'>&nbsp;</button>",
+            nextArrow: "<button type='button' class='slick-next'>&nbsp;</button>",
         });
 
-        $('#diaryImg')[0].files = dt.files;
-    }
+    });
 
+    $('.fa-ellipsis').click(function (e) {
+        e.stopPropagation();
+        $('.diary-menu').toggle();
+    });
+
+    $(document).click(function () {
+        $('.diary-menu').hide();
+    });
+
+    $('.fa-xmark').click(function () {
+        $('.popup-overlay').removeClass('show');
+    });
+
+    $(document).mouseup(function (e) {
+        const overlay = $('.popup-overlay');
+        if (overlay.has(e.target).length === 0) {
+            overlay.removeClass('show');
+        }
+    });
+
+    $(document).on("click", ".submit-diary-menu", function () {
+        const target = $(this).attr("href");
+        $(target).addClass('show');
+    });
+
+    $('#no').click(function () {
+            $('.popup-overlay').removeClass('show');
+        });
+
+
+
+    
 </script>
 </body>
 

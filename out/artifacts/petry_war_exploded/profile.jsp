@@ -402,7 +402,7 @@
                 <div class="menu-wrapper">
                     <i class="fa-solid fa-bars menu-ic"></i>
                     <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
+                        <a href="./diaryList.jsp" class="menu-ic-wrapper">
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
@@ -442,7 +442,7 @@
                             <input type="file" name="pImg" id="pImg" accept=".png, .jpeg, .jpg" value="">
                         </div>
                         <div class="input-wrapper">
-                            <input type="submit" value="등록하기" class="submit" formenctype="multipart/form-data" formaction="profile.do">
+                            <input type="submit" value="등록하기" class="submit" formaction="profile.do">
                         </div>
                     </div>
                 </div>

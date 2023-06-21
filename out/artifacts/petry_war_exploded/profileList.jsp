@@ -367,17 +367,17 @@
 </head>
 
 <body>
-    <form method="post">
-        <input type="submit" formenctype="multipart/form-data" formaction="profileList.do" id="temp">
         <div class="wrapper">
             <div class="header">
                 <div class="logo">
-                    <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
+                    <form method="post">
+                        <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
+                    </form>
                 </div>
                 <div class="menu-wrapper">
                     <i class="fa-solid fa-bars menu-ic"></i>
                     <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
+                        <a href="./diaryList.jsp" class="menu-ic-wrapper">
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
@@ -392,41 +392,43 @@
                     </div>
                 </div>
             </div>
-            <div class="content-wrapper">
-                <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
-                <div class="profiles">
-
+            <form action="profileList.do" method="post">
+                <div class="content-wrapper">
+                    <a href="./profile.jsp"><i class="fa-solid fa-plus"></i></a>
+                    <div class="profiles">
                         <c:forEach var="profile" items="${profile}" varStatus="status">
                             <div class="profile-wrapper">
-                                <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
-                                    <img class="pImg" src="./assets/images/profile/${profileImg.piName}">
+                                <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}"
+                                           end="${status.index}">
+                                    <img class="pImg" src="<%=request.getContextPath()%>/assets/images/profile/${profileImg.piName}">
                                 </c:forEach>
                                 <div class="p-wrapper">
                                     <p class="pName">${profile.pName}</p>
                                     <p class="pSex">${profile.pSex}</p>
                                     <p class="pBirth">${profile.pBirth}</p>
                                 </div>
-                                <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i class="fa-solid fa-minus"></i></a>
+                                <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i
+                                    class="fa-solid fa-minus"></i></a>
                             </div>
-                    </c:forEach>
+                        </c:forEach>
+                    </div>
                 </div>
-            </div>
+            </form>
             <div class="footer">
                 <p>푸터입니다</p>
             </div>
-
-            <div class="popup-overlay" id="popup">
-                <div class="delete-wrapper">
-                    <p>정말 삭제하시겠습니까?</p>
-                    <input type="hidden" name="pId" id="pId">
-                    <input type="hidden" name="piId" id="piId">
-                    <input type="submit" value="예" class="submit" id="yes" formaction="deleteProfile.do">
-                    <input type="button" value="아니오" id="no" class="submit">
+            <form method="post">
+                <div class="popup-overlay" id="popup">
+                    <div class="delete-wrapper">
+                        <p>정말 삭제하시겠습니까?</p>
+                        <input type="hidden" name="pId" id="pId">
+                        <input type="hidden" name="piId" id="piId">
+                        <input type="submit" value="예" class="submit" id="yes" formaction="deleteProfile.do">
+                        <input type="button" value="아니오" id="no" class="submit">
                     </div>
-            </div>
+                </div>
+            </form>
         </div>
-        
-    </form>
     <script type="text/javascript">
         $('.menu-ic').click(function (e) {
             e.stopPropagation();
@@ -452,10 +454,10 @@
             $('.popup-overlay').removeClass('show');
         });
 
-        (() => {
-            $('#temp').submit();
-            console.log('.do 실행');
-        })();
+        // (() => {
+        //     $('#temp').submit();
+        //     console.log('.do 실행');
+        // })();
 
     </script>
 </body>

@@ -1,5 +1,5 @@
-<!-- <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> -->
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -170,7 +170,7 @@
 
         .wrapper {
             width: calc(100vw - 17px);
-            min-height: 100vh;   
+            height: calc(100vh - 200px);  
         }
 
         .header {
@@ -275,10 +275,6 @@
             background-color: #F2C8B0;
         }
 
-        .content-wrapper {
-            margin-left: 50px;
-        }
-
         .diary-wrapper {
             position: relative;
             width: 1700px;
@@ -335,20 +331,10 @@
             width: 800px;
         }
 
-        .submit {
-            font-family: 'Cafe24SsurroundAir';
-            width: 290px;
-            border: solid 1px #F2C8B0;
-            background-color: #fff;
-            border-radius: 7px;
-            margin-top: 10px;
-        }
-
-        .submit:hover {
-            background-color: #F2C8B0;
-        }
+        
 
         input[type='file'] {
+            float: left;
             font-family: 'Cafe24SsurroundAir';
             padding: 5px;
             margin: auto;
@@ -357,9 +343,9 @@
         }
 
         input[type='file']::file-selector-button {
-            width: 100px;
+            width: 150px;
             height: 30px;
-            border: 1px solid #F2C8B0;
+            border: 2px solid #F2C8B0;
             border-radius: 10%;
             margin-top: 4.5px;
             background-color: white;
@@ -370,23 +356,143 @@
         input[type='file']::file-selector-button:hover {
             background-color: #F2C8B0;
         }
+
+        input, textarea {
+            display: block;
+            height: 30px;
+            width: 290px;
+            margin-bottom: 15px;
+            margin-left: 1px;
+            border: solid 1px #bbb;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #F2C8B0;
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        .submit {
+            font-family: 'Cafe24SsurroundAir';
+            width: 290px;
+            border: solid 2px #F2C8B0;
+            background-color: #fff;
+            border-radius: 7px;
+            margin-top: 10px;
+            float: right;
+        }
+
+        .submit:hover {
+            background-color: #F2C8B0;
+        }
+
+        #diaryTitle {
+            width: 1200px;
+        }
+
+        #diaryContent {
+            width: 1200px;
+            height: 400px;
+        }
+
+        .content-wrapper {
+            position: relative;
+            width: 100%;
+            height: inherit;
+        }
+
+        .input-wrapper {
+            position: absolute;
+            width: max-content;
+            height: max-content;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .prev-wrapper {
+            position: relative;
+            width: 1210px;
+            height: 150px;
+            border: 2px solid #F2C8B0;
+            border-radius: 5px;
+        }
+
+        .prev-img {
+            position: absolute;
+            width: max-content;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);       
+        }
+
+        .img {
+            margin: 10px;
+            position: relative;
+            width: min-content;
+            display: inline-block;
+        }
+
+        .img img {
+            height: 120px;
+        }
+
+        .slick-dots {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .slick-dots li {
+            width: 50px;
+            margin: 0;
+            display: inline-block;
+            height: 5px;
+            background-color: #ccc;
+        }
+
+        .slick-dots button {
+            display: none;
+        }
+
+        .slick-dots .slick-active {
+            background-color: #F2C8B0;
+        }
+
+        .img i {
+            position: absolute;
+            right: 0;
+            font-size: 1.1em;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .img i:hover {
+            font-size: 1.2em;
+            margin: 4px;
+        }
+
+        
     </style>
 </head>
 
 <body>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <input type="submit" id="temp" formaction="main.do">
     <div class="wrapper">
         <div class="header">
             <div class="logo">
                 <input type="image" id="logo" src="./assets/logo.png" formaction="main.do">
             </div>
-
             <div class="menu-wrapper">
                 <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
                 <div class="overlay" id="menu">
                     <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
+                        <a href="./diaryList.jsp" class="menu-ic-wrapper">
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
@@ -403,17 +509,25 @@
             </div>
         </div>
         <div class="content-wrapper">
-            <div class="title">
-                <input type="text" id="diaryTitle" name="diaryTitle" placeholder="제목을 입력해주세요.">
+            <div class="input-wrapper">
+                <div class="title">
+                    <input type="text" id="diaryTitle" name="diaryTitle" placeholder="제목을 입력해주세요.">
+                </div>
+                <div class="content">
+                    <textarea id="diaryContent" name="diaryContent"></textarea>
+            
+                </div>
+                <div class="prev">
+                    <div class="prev-wrapper">
+                        <div class="prev-img">
+
+                        </div>
+                    </div>
+                    <input type="file" name="diaryImg" id="diaryImg" accept=".png, .jpeg, .jpg" multiple>
+                    <input type="submit" class="submit" value="작성" formaction="diary.do">
+                </div>
+                
             </div>
-            <div class="content">
-                <textarea id="diaryContent" name="diaryContetn"></textarea>
-                <input type="file" name="diaryImg" id="diaryImg" multiple>
-            </div>
-            <div class="prev">
-                <img class="prev-img">
-            </div>
-            <input type="submit" class="submit" value="작성">
         </div>
     </div>
     <div class="footer">
@@ -421,6 +535,8 @@
     </div>
 </form>
 <script type="text/javascript">
+    let sel_file = [];
+
     $('.menu-ic').click(function (e) {
         e.stopPropagation();
         $('.menu').toggle();
@@ -428,6 +544,56 @@
     $(document).click(function () {
         $('.menu').hide();
     });
+
+
+    $(document).ready(function () {
+        $('#diaryImg').on('change', prevImg);
+    });
+
+    function prevImg(e) {
+        const files = e.target.files;
+        const filesArr = Array.prototype.slice.call(files);
+
+        if (filesArr.length > 10) {
+            alert('파일은 최대 10개까지 업로드 할 수 있습니다.');
+            $('#diaryImg').val("");
+            return;
+        } else {
+            let index = 0;
+            filesArr.forEach(function (f) {
+                if (!f.type.match("image.*")) {
+                    alert('이미지만 업로드 할 수 있습니다.');
+                    $('#diaryImg').val("");
+                    return;
+                }
+                sel_file.push(f);
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img_html = "<div class=\"img\"><i class=\"fa-solid fa-xmark\" onclick=\"deletePrevImg(" + index + ")\"></i><img src=\"" + e.target.result + "\" /></div>";
+                    $('.prev-img').append(img_html);
+                    index ++;
+                }
+
+                reader.readAsDataURL(f);
+            });
+        }
+    }
+
+    function deletePrevImg(index) {
+        sel_file.splice(index, 1);
+        $('.img').eq(index).remove();
+
+        const dt = new DataTransfer();
+        let files = $('#diaryImg')[0].files;
+        let fileArr = Array.from(files);
+        fileArr.splice(index, 1);
+
+        fileArr.forEach(file => {
+            dt.items.add(file);
+        });
+
+        $('#diaryImg')[0].files = dt.files;
+    }
 
 </script>
 </body>

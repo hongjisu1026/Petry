@@ -341,78 +341,75 @@
 </head>
 
 <body>
-<form method="post">
-    <input type="submit" id="temp" formaction="main.do">
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo">
-                <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
-            </div>
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">
+            <input type="image" src="./assets/logo.png" formaction="main.do" id="logo">
+        </div>
 
-            <div class="menu-wrapper">
-                <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
-                <div class="overlay" id="menu">
-                    <div class="menu">
-                        <a href="./diary.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-book-bookmark"></i>
-                            <p>다이어리</p>
-                        </a>
-                        <a href="./album.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-image"></i>
-                            <p>앨범</p>
-                        </a>
-                        <a href="./setting.jsp" class="menu-ic-wrapper">
-                            <i class="fa-solid fa-gear"></i>
-                            <p>설정</p>
-                        </a>
-                    </div>
+        <div class="menu-wrapper">
+            <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
+            <div class="overlay" id="menu">
+                <div class="menu">
+                    <a href="./diaryList.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                        <p>다이어리</p>
+                    </a>
+                    <a href="./album.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-image"></i>
+                        <p>앨범</p>
+                    </a>
+                    <a href="./setting.jsp" class="menu-ic-wrapper">
+                        <i class="fa-solid fa-gear"></i>
+                        <p>설정</p>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="content-wrapper">
-            <form action="main.do" method="post" id="form">
-                <div class="profile-wrapper">
-                    <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
-                        <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
-                            <div class="profile">
-                                <img src="./assets/images/profile/${profileImg.piName}">
-                                <p>${profile.pName} ${profile.pSex}</p>
-                            </div>
-                        </c:forEach>
-                    </c:forEach>
-                    <div class="more" onclick="showMore()">
-                        <i class="fa-solid fa-ellipsis"></i>
-                    </div>
-                    <div class="x" onclick="hideMore()">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
-            </form>
-            <div class="img-wrapper">
-                <div class="center" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
-                    <div class="img">
-                        <h3>1</h3>
-                    </div>
-                    <div class="img">
-                        <h3>2</h3>
-                    </div>
-                    <div class="img">
-                        <h3>3</h3>
-                    </div>
-                    <div class="img">
-                        <h3>4</h3>
-                    </div>
-                    <div class="img">
-                        <h3>5</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <p>푸터입니다</p>
         </div>
     </div>
-</form>
+    <div class="content-wrapper">
+        <form action="main.do" method="post" id="form">
+            <div class="profile-wrapper">
+                <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
+                    <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
+                        <div class="profile">
+                            <img src="./assets/images/profile/${profileImg.piName}">
+                            <p>${profile.pName} ${profile.pSex}</p>
+                        </div>
+                    </c:forEach>
+                </c:forEach>
+                <div class="more" onclick="showMore()">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="x" onclick="hideMore()">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+        </form>
+        <div class="img-wrapper">
+            <div class="center" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
+                <div class="img">
+                    <h3>1</h3>
+                </div>
+                <div class="img">
+                    <h3>2</h3>
+                </div>
+                <div class="img">
+                    <h3>3</h3>
+                </div>
+                <div class="img">
+                    <h3>4</h3>
+                </div>
+                <div class="img">
+                    <h3>5</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>푸터입니다</p>
+    </div>
+</div>
 <script type="text/javascript">
     (() => {
         hideMore();
@@ -498,10 +495,10 @@
         });
     });
 
-    (() => {
-        $('#temp').submit();
-        console.log('.do 실행');
-    })();
+    // (() => {
+    //     $('#temp').submit();
+    //     console.log('.do 실행');
+    // })();
 
 
 </script>
