@@ -40,7 +40,9 @@ create table diary (
 dId int primary key auto_increment,
 dTitle varchar(255),
 dContent varchar(2000),
-dUploadTime datetime default now()
+dUploadTime datetime default now(),
+uId int not null,
+foreign key (uId) references user (uId)
 );
 
 ===============================

@@ -1,7 +1,9 @@
 package com.petry.frontController;
 
 import com.petry.command.*;
+import com.petry.diary.command.LoadDetailCommand;
 import com.petry.diary.command.DiaryCommand;
+import com.petry.diary.command.LoadDiaryCommand;
 import com.petry.profile.command.DeleteProfileCommand;
 import com.petry.profile.command.LoadProfileCommand;
 import com.petry.profile.command.ProfileCommand;
@@ -34,10 +36,12 @@ public class FrontController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         String commandName = request.getServletPath();
+        HttpSession session = request.getSession();
         String viewPage = null;
         Command command = null;
-        LoginCommand loginCommand = null;
-        FindCommand findCommand = null;
+        BooleanCommand booleanCommand = null;
+        StringCommand stringCommand = null;
+        DetailCommand detailCommand = null;
 
         switch (commandName) {
             case "/register.do":
@@ -50,8 +54,8 @@ public class FrontController extends HttpServlet {
             case "/index.do":
                 viewPage = "index.jsp";
             case "/login.do":
-                loginCommand = new LoginOKCommand();
-                boolean check = loginCommand.excute(request, response);
+                booleanCommand = new BooleanOKCommand();
+                boolean check = booleanCommand.excute(request, response);
                 if (check) {
                     viewPage = "main.jsp";
                     command = new LoadProfileCommand();
@@ -61,8 +65,8 @@ public class FrontController extends HttpServlet {
                 }
                 break;
             case "/findId.do":
-                findCommand = new FindIdCommand();
-                String id = findCommand.excute(request, response);
+                stringCommand = new StringIdCommand();
+                String id = stringCommand.excute(request, response);
                 if (id != null) {
                     request.setAttribute("info", id);
                     viewPage = "findId.jsp";
@@ -71,8 +75,8 @@ public class FrontController extends HttpServlet {
                 }
                 break;
             case "/findPwd.do":
-                findCommand = new FindPwdCommand();
-                String pwd = findCommand.excute(request, response);
+                stringCommand = new StringPwdCommand();
+                String pwd = stringCommand.excute(request, response);
                 if (pwd != null) {
                     request.setAttribute("info", pwd);
                     viewPage = "findPwd.jsp";
@@ -117,8 +121,15 @@ public class FrontController extends HttpServlet {
             case "/diary.do":
                 command = new DiaryCommand();
                 command.excute(request, response);
+                command = new LoadDiaryCommand();
+                command.excute(request, response);
                 viewPage = "diaryList.jsp";
-
+                break;
+            case "/diaryList.do":
+                command = new LoadDiaryCommand();
+                command.excute(request, response);
+                viewPage = "diaryList.jsp";
+                break;
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
