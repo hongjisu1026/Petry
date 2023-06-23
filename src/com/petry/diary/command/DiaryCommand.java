@@ -19,6 +19,7 @@ import java.util.Enumeration;
 public class DiaryCommand implements Command {
     @Override
     public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         DiaryDAO dao = DiaryDAO.getDiaryDAO();
         DiaryDTO dto = new DiaryDTO();
         AlbumDTO albumDTO = new AlbumDTO();
@@ -56,6 +57,7 @@ public class DiaryCommand implements Command {
             albumDTO.setaSize(aSize);
             albumDTO.setdId(dId);
             albumDTO.setaThumbnail(count);
+            albumDTO.setuId(uId);
 
             count++;
             dao.insertDiaryImg(albumDTO);

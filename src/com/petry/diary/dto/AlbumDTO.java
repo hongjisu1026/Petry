@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class AlbumDTO {
     int aId;
     int dId;
+    int uId;
     String aName;
     String aOriName;
     String aPath;
@@ -27,6 +28,14 @@ public class AlbumDTO {
 
     public void setdId(int dId) {
         this.dId = dId;
+    }
+
+    public int getuId() {
+        return uId;
+    }
+
+    public void setuId(int uId) {
+        this.uId = uId;
     }
 
     public String getaName() {

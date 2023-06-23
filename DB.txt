@@ -57,5 +57,7 @@ aSize int,
 aUploadTime datetime default now(),
 aThumbnail int,
 dId int not null,
-foreign key (dId) references diary (dId)
+uId int not null,
+foreign key (dId) references diary (dId),
+foreign key (uId) references user (uId)
 );

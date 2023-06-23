@@ -2,6 +2,7 @@ package com.petry.diary.command;
 
 import com.petry.command.Command;
 import com.petry.diary.dao.DiaryDAO;
+import com.petry.diary.dto.AlbumDTO;
 import com.petry.diary.dto.DiaryDTO;
 import com.petry.user.dto.UserDTO;
 
@@ -15,20 +16,25 @@ import java.util.ArrayList;
 public class LoadDiaryCommand implements Command {
     @Override
     public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         DiaryDAO dao = DiaryDAO.getDiaryDAO();
         HttpSession session = request.getSession();
         int uId = ((UserDTO) session.getAttribute("userInfo")).getuId();
 
         ArrayList<DiaryDTO> diary = dao.selectAllDiary(uId);
         ArrayList<String> thumbnail = new ArrayList<>();
+        ArrayList<String> album = new ArrayList<>();
 
         for (DiaryDTO dto : diary) {
             int dId = dao.selectdId(dto);
             dto.setdId(dId);
             thumbnail.add(dao.selectThumbnailImg(dId));
+            album.add(dao.selectDiaryImg(dId));
+            System.out.println(dao.selectDiaryImg(dId));
         }
 
         request.setAttribute("diary", diary);
         request.setAttribute("thumbnail", thumbnail);
+        request.setAttribute("album", album);
     }
 }

@@ -1,9 +1,7 @@
 package com.petry.frontController;
 
 import com.petry.command.*;
-import com.petry.diary.command.LoadDetailCommand;
-import com.petry.diary.command.DiaryCommand;
-import com.petry.diary.command.LoadDiaryCommand;
+import com.petry.diary.command.*;
 import com.petry.profile.command.DeleteProfileCommand;
 import com.petry.profile.command.LoadProfileCommand;
 import com.petry.profile.command.ProfileCommand;
@@ -60,6 +58,8 @@ public class FrontController extends HttpServlet {
                     viewPage = "main.jsp";
                     command = new LoadProfileCommand();
                     command.excute(request, response);
+                    command = new CurrentAlbumCommand();
+                    command.excute(request, response);
                 } else {
                     viewPage = "loginError.jsp";
                 }
@@ -97,6 +97,8 @@ public class FrontController extends HttpServlet {
             case "/main.do":
                 command = new LoadProfileCommand();
                 command.excute(request, response);
+                command = new CurrentAlbumCommand();
+                command.excute(request, response);
                 viewPage = "main.jsp";
                 break;
             case "/profile.do":
@@ -126,6 +128,20 @@ public class FrontController extends HttpServlet {
                 viewPage = "diaryList.jsp";
                 break;
             case "/diaryList.do":
+                command = new LoadDiaryCommand();
+                command.excute(request, response);
+                viewPage = "diaryList.jsp";
+                break;
+            case "/deleteDiary.do":
+                command = new DeleteDiaryCommand();
+                command.excute(request, response);
+                command = new LoadDiaryCommand();
+                command.excute(request, response);
+                viewPage = "diaryList.jsp";
+                break;
+            case "/editDiary.do":
+                command = new EditDiaryCommand();
+                command.excute(request, response);
                 command = new LoadDiaryCommand();
                 command.excute(request, response);
                 viewPage = "diaryList.jsp";

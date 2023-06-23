@@ -7,10 +7,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DiaryDAO {
@@ -47,7 +44,7 @@ public class DiaryDAO {
     }
 
     public void insertDiaryImg(AlbumDTO dto) {
-        String SQL = "INSERT INTO " + ALBUM + " (aName, aOriName, aPath, aType, aSize, aThumbnail, dId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO " + ALBUM + " (aName, aOriName, aPath, aType, aSize, aThumbnail, dId, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, dto.getaName());
@@ -57,6 +54,7 @@ public class DiaryDAO {
             pstmt.setLong(5, dto.getaSize());
             pstmt.setInt(6, dto.getaThumbnail());
             pstmt.setInt(7, dto.getdId());
+            pstmt.setInt(8, dto.getuId());
 
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -123,43 +121,81 @@ public class DiaryDAO {
         return aName;
     }
 
-    public DiaryDTO selectDiary(int dId) {
-        DiaryDTO dto = new DiaryDTO();
-        String SQL = "SELECT * FROM " + DIARY + " WHERE dId = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-            pstmt.setInt(1, dId);
-
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                dto.setdTitle(rs.getString("dTitle"));
-                dto.setdContent(rs.getString("dContent"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return dto;
-    }
-
-    public ArrayList<String> selectDiaryImg(int dId) {
-        ArrayList<String> list = new ArrayList<>();
-        String aName = null;
+    public String selectDiaryImg(int dId) {
+        String list = "";
         String SQL = "SELECT * FROM " + ALBUM + " WHERE dId = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setInt(1, dId);
 
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                aName = rs.getString("aName");
-
-                list.add(aName);
+            while (rs.next()) {
+                list += rs.getString("aName") + " ";
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return list;
+    }
+
+    public ArrayList<String> selectDiaryImgLimit5(int uId) {
+        ArrayList<String> list = new ArrayList<>();
+        String SQL = "SELECT * FROM " + ALBUM + " WHERE uId = ? ORDER BY aUploadTime DESC LIMIT 5";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString("aName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public void deleteDiary(int uId, int dId) {
+        String SQL = "DELETE FROM " + DIARY + " WHERE uId = ? AND dId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+            pstmt.setInt(2, dId);
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteDiaryImg(int uId, int dId) {
+        String SQL = "DELETE FROM " + ALBUM + " WHERE uId = ? AND dId = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+            pstmt.setInt(2, dId);
+
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateDiary(String oldTitle, String oldContent, String newTitle, String newContent, int uId) {
+        String SQL = "UPDATE " + DIARY + " SET dTitle = ?, dContent = ? WHERE dTitle = ? AND dContent = ? AND uId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+             pstmt.setString(1, newTitle);
+             pstmt.setString(2, newContent);
+             pstmt.setString(3, oldTitle);
+             pstmt.setString(4, oldContent);
+             pstmt.setInt(5, uId);
+
+             int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

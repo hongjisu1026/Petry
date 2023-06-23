@@ -326,7 +326,163 @@
         }
 
 
+        .detail-wrapper {
+            width: 50%;
+            float: right;
+            height: calc(100vh - 220px);
+            overflow: auto;
+        }
 
+        .detail {
+            padding: 20px 30px;
+            margin: auto;
+        }
+
+        #detailTitle {
+            font-size: 2em;
+            margin-bottom: 20px;
+            margin-left: 5px;
+        }
+
+        #detailContent {
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-left: 5px;
+        }
+
+        .detail-img {
+            height: 300px;
+        }
+
+        .img {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+        }
+
+        .img img {
+            height: 300px;
+            margin: auto;
+        }
+
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            border: none;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .slick-prev {
+            background: url(./assets/icon/circle-chevron-left-solid.svg) no-repeat;
+            left: 10px;
+        }
+
+        .slick-next {
+            background: url(./assets/icon/circle-chevron-right-solid.svg) no-repeat;
+            right: 10px;
+        }
+
+        .detail i {
+            position: relative;
+            float: right;
+            font-size: 3em;
+        }
+
+        .diary-menu-wrapper {
+            position: relative;
+            float: right;
+        }
+
+        .diary-menu {
+            display: none;
+            position: absolute;
+            width: 150px;
+            border: 1px solid #F2C8B0;
+            padding: 20px;
+            border-radius: 5px;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .submit-diary-menu {
+            background-color: white;
+            font-size: 1.3em;
+            font-family: 'Cafe24SsurroundAir';
+            color: #F2C8B0;
+            padding: 5px 10px;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+
+        .submit-diary-menu:hover {
+            font-size: 1.5em;
+        }
+
+        .submit {
+            display: inline-block;
+            font-family: 'Cafe24SsurroundAir';
+            width: 130px;
+            font-size: large;
+            border: solid 1px #F2C8B0;
+            background-color: #fff;
+            border-radius: 7px;
+            margin: 10px;
+            padding: 5px;
+        }
+
+        .submit:hover {
+            background-color: #F2C8B0;
+        }
+
+        .popup-overlay {
+            display: none;
+            z-index: 1000;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        .confirm {
+            position: absolute;
+            background-color: white;
+            width: 400px;
+            text-align: center;
+            padding: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: solid #F2C8B0 1px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .confirm p {
+            margin-bottom: 20px;
+            color: #F2C8B0;
+            font-size: 1.5em;
+        }
+
+        .confirm i {
+            position: absolute;
+            color: #F2C8B0;
+            right: 20px;
+            top: 20px;
+            font-size: larger;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -363,21 +519,45 @@
         <div class="diary-wrapper">
             <c:forEach var="diary" items="${diary}" varStatus="status">
                 <c:forEach var="thumbnail" items="${thumbnail}" begin="${status.index}" end="${status.index}">
-                    <div class="diary">
-                        <img class="diary-img" src="./assets/images/album/${thumbnail}">
-                        <div class="diary-content-wrapper">
-                            <p class="diary-title">
-                                <a href="javascript:void(0)" onclick="ff(${diary.dId})">${diary.dTitle}</a>
-                            </p>
-                            <p class="diary-content">${diary.dContent}</p>
+                    <c:forEach var="album" items="${album}" begin="${status.index}" end="${status.index}">
+                        <div class="diary">
+                            <img class="diary-img" src="./assets/images/album/${thumbnail}">
+                            <div class="diary-content-wrapper">
+                                <p class="diary-title">
+                                    <a href="javascript:void(0)" onclick="ff('${album}', '${diary.dTitle}', '${diary.dContent}', ${diary.dId})">${diary.dTitle}</a>
+                                </p>
+                                <p class="diary-content">${diary.dContent}</p>
+                            </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </c:forEach>
             </c:forEach>
             
         </div>
         <div class="detail-wrapper">
-            
+            <div class="detail">
+                <div class="diary-menu-wrapper">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="diary-menu" id="diaryMenu">
+                        <a id="edit" href="javascript:void(0)" class="submit-diary-menu">수정</a>
+                        <a href="#confirm" class="submit-diary-menu">삭제</a>
+                    </div>
+                </div>
+                <p id="detailTitle"></p>
+                <div class="img-wrapper">
+                    <div class="detail-img">
+                    </div>
+                </div>
+                <p id="detailContent"></p>
+            </div>
+        </div>
+        <div class="popup-overlay" id="confirm">
+            <div class="confirm">
+                <i class="fa-solid fa-xmark"></i>
+                <p>정말 삭제하시겠습니까?</p>
+                <a class="submit" id="delete">예</a>
+                <input type="button" value="아니오" id="no" class="submit">
+            </div>
         </div>
     <div class="footer">
         <p>푸터입니다</p>
@@ -407,13 +587,50 @@
         }
     });
 
+
+
+    $(document).on("click", ".submit-diary-menu", function () {
+        const target = $(this).attr("href");
+        $(target).addClass('show');
+    });
+
+    $('#no').click(function () {
+        $('.popup-overlay').removeClass('show');
+    });
     
 
-    function ff(dId) {
-        sessionStorage.setItem("dId", dId);
-        $('.detail-wrapper').load('diaryDetail.jsp');
+    function ff(album, dTitle, dContent, dId) {
+        console.log(dTitle);
+        console.log(dContent);
+        document.getElementById('edit').href = "./editDiary.jsp?dTitle=" + dTitle + "&dContent=" + dContent;
+        document.getElementById('delete').href = "./deleteDiary.jsp?dId=" + dId;
+
+        if ($('.slick-initialized').length !== 0) {
+            $('.detail-img').slick('unslick');
+        }
+
+        let list = album.split(" ");
+        let html = '';
+        for (let i = 0; i < list.length - 1; i++) {
+            console.log(list[i]);
+            console.log('<div class=\"img\"><img src=\"./assets/images/album/' + list[i] +'\"></div>');
+            html += '<div class=\"img\"><img src=\"./assets/images/album/' + list[i] +'\"></div>';
+        }
+        $('#detailTitle').html(dTitle);
+        $('#detailContent').html(dContent);
+        $('.detail-img').html(html);
+
+        $('.detail-img').slick({
+            arrows: true,
+            prevArrow: "<button type='button' class='slick-prev'>&nbsp;</button>",
+            nextArrow: "<button type='button' class='slick-next'>&nbsp;</button>",
+        });
     }
 
+    function tt() {
+        console.log(document.getElementById('edit').href);
+        console.log(document.getElementById('delete').href);
+    }
     
 </script>
 </body>

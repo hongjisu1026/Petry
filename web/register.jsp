@@ -237,42 +237,42 @@
             <table>
                 <tr>
                     <td><label for="id">아이디</label><br>
-                        <input type="text" id="id" name="id" data-name="아이디">
+                        <input type="text" id="id" name="id" class="item" data-name="아이디">
                         <p class="check" id="i_text"></p>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="pwd">비밀번호</label><br>
-                        <input type="password" id="pwd" name="pwd" data-name="비밀번호" onkeyup="validationPwd()">
+                        <input type="password" id="pwd" name="pwd" class="item" data-name="비밀번호" onkeyup="validationPwd()">
                         <p class="check" id="p_text"></p>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="ch_pwd">비밀번호 확인</label><br>
-                        <input type="password" id="ch_pwd" name="ch_pwd" data-name="비밀번호 확인" onkeyup="checkPwd()">
+                        <input type="password" id="ch_pwd" name="ch_pwd" class="item" data-name="비밀번호 확인" onkeyup="checkPwd()">
                         <p class="check" id="c_text"></p>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="email">이메일</label><br>
-                        <input type="email" id="email" name="email" data-name="이메일" onkeyup="validationEmail()">
+                        <input type="email" id="email" name="email" class="item" data-name="이메일" onkeyup="validationEmail()">
                         <p class="check" id="e_text"></p>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="name">이름</label><br>
-                        <input type="text" id="name" name="name" data-name="이름">
+                        <input type="text" id="name" name="name" class="item" data-name="이름">
                     </td>
                 </tr>
                 <tr>
                     <td><label for="birth">생년월일 8자리</label><br>
-                        <input type="text" id="birth" name="birth" data-name="생년월일" onkeyup="validationBirth()">
+                        <input type="text" id="birth" name="birth" class="item" data-name="생년월일" onkeyup="validationBirth()">
                         <p class="check" id="b_text"></p>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="nickname">닉네임</label><br>
-                        <input type="text" id="nickname" name="nickname" data-name="닉네임">
+                        <input type="text" id="nickname" name="nickname" class="item" data-name="닉네임">
                     </td>
                 </tr>
                 <tr>
@@ -364,7 +364,7 @@
     $(function () {
         $("#submit").click(function () {
             let isRight = true;
-            $("#form").find("input").each(function (index, item) {
+            $("#form").find($('.item')).each(function (index, item) {
                 if ($(this).val().trim() == "") {
                     alert($(this).attr("data-name") + "을/를 입력하세요.");
                     isRight = false;

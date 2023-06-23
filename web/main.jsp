@@ -313,6 +313,11 @@
             margin: 10px;
         }
 
+        .img img {
+            width: 300px;
+            height: 300px;
+        }
+
         .slick-arrow {
             position: absolute;
             top: 50%;
@@ -334,7 +339,7 @@
             right: 30px;
         }
 
-        #temp {
+        #current {
             display: none;
         }
     </style>
@@ -387,22 +392,12 @@
             </div>
         </form>
         <div class="img-wrapper">
-            <div class="center" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
-                <div class="img">
-                    <h3>1</h3>
-                </div>
-                <div class="img">
-                    <h3>2</h3>
-                </div>
-                <div class="img">
-                    <h3>3</h3>
-                </div>
-                <div class="img">
-                    <h3>4</h3>
-                </div>
-                <div class="img">
-                    <h3>5</h3>
-                </div>
+            <div class="center">
+                <c:forEach var="current" items="${current}">
+                    <div class="img">
+                        <img src="./assets/images/album/${current}">
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -458,42 +453,28 @@
         $('.center').slick({
             centerMode: true,
             centerPadding: '50px',
-            slidesToShow: 3,
-            autoplay: false,
+            autoplay: true,
             autoplayspeed: 10000,
             pauseOnHover: true,
             arrows: true,
             variableWidth: true,
             prevArrow: "<button type='button' class='slick-prev'>&nbsp;</button>",
-            nextArrow: "<button type='button' class='slick-next'>&nbsp;</button>",
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 3,
-                        autoplay: true,
-                        autoplayspeed: 10000,
-                        pauseOnHover: true,
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 1,
-                        autoplay: true,
-                        autoplayspeed: 10000,
-                        pauseOnHover: true,
-                    }
-                }
-            ]
+            nextArrow: "<button type='button' class='slick-next'>&nbsp;</button>"
         });
     });
+
+    // function currentImg() {
+    //     let list = $('#current').val();
+    //     console.log(list);
+    //     list = list.split(" ");
+    //     for (let i = 0; i < list.length; i++) {
+    //         console.log(list[i]);
+    //     }
+    // }
+    //
+    // (() => {
+    //     currentImg();
+    // })();
 
     // (() => {
     //     $('#temp').submit();
