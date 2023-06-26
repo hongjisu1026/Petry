@@ -1,6 +1,6 @@
 package com.petry.diary.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.diary.dao.DiaryDAO;
 import com.petry.user.dto.UserDTO;
 
@@ -20,9 +20,11 @@ public class DeleteDiaryCommand implements Command {
         int uId = ((UserDTO) session.getAttribute("userInfo")).getuId();
         int dId = Integer.parseInt(request.getParameter("dId"));
 
+        System.out.println(dId);
+
         String imgList = dao.selectDiaryImg(dId);
         String[] list = imgList.split(" ");
-        String aPath = "E:\\JavaStudy\\Project\\petry\\web\\assets\\images\\album";
+        String aPath = "F:\\JavaStudy\\Project\\petry\\web\\assets\\images\\album";
         File file = null;
         for (String s : list) {
             file = new File(aPath + "\\" + s);

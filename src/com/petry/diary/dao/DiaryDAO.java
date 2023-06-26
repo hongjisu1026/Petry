@@ -2,11 +2,13 @@ package com.petry.diary.dao;
 
 import com.petry.diary.dto.AlbumDTO;
 import com.petry.diary.dto.DiaryDTO;
+import org.apache.commons.io.FileUtils;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -44,21 +46,26 @@ public class DiaryDAO {
     }
 
     public void insertDiaryImg(AlbumDTO dto) {
-        String SQL = "INSERT INTO " + ALBUM + " (aName, aOriName, aPath, aType, aSize, aThumbnail, dId, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO " + ALBUM + " (aName, aOriName, aPath, aType, aSize, aThumbnail, aImg,  dId, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            byte[] bytes = FileUtils.readFileToByteArray(dto.getaImg());
+
             pstmt.setString(1, dto.getaName());
             pstmt.setString(2, dto.getaOriName());
             pstmt.setString(3, dto.getaPath());
             pstmt.setString(4, dto.getaType());
             pstmt.setLong(5, dto.getaSize());
             pstmt.setInt(6, dto.getaThumbnail());
-            pstmt.setInt(7, dto.getdId());
-            pstmt.setInt(8, dto.getuId());
+            pstmt.setBytes(7, bytes);
+            pstmt.setInt(8, dto.getdId());
+            pstmt.setInt(9, dto.getuId());
 
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -103,22 +110,24 @@ public class DiaryDAO {
         return list;
     }
 
-    public String selectThumbnailImg(int dId) {
-        String aName = null;
-        String SQL = "SELECT aName FROM " + ALBUM + " WHERE dId = ? AND aThumbnail = 1";
+    public DiaryDTO selectDiary(int dId, int uId) {
+        DiaryDTO dto = new DiaryDTO();
+        String SQL = "SELECT * FROM " + DIARY + " WHERE dId = ? AND uId = ?";
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setInt(1, dId);
+            pstmt.setInt(2, uId);
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                aName = rs.getString("aName");
+                dto.setdTitle(rs.getString("dTitle"));
+                dto.setdContent(rs.getString("dContent"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return aName;
+        return dto;
     }
 
     public String selectDiaryImg(int dId) {
@@ -183,16 +192,14 @@ public class DiaryDAO {
         }
     }
 
-    public void updateDiary(String oldTitle, String oldContent, String newTitle, String newContent, int uId) {
-        String SQL = "UPDATE " + DIARY + " SET dTitle = ?, dContent = ? WHERE dTitle = ? AND dContent = ? AND uId = ?";
+    public void updateDiary(int dId, int uId, String newTitle, String newContent) {
+        String SQL = "UPDATE " + DIARY + " SET dTitle = ?, dContent = ? WHERE dId = ? AND uId = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
              pstmt.setString(1, newTitle);
              pstmt.setString(2, newContent);
-             pstmt.setString(3, oldTitle);
-             pstmt.setString(4, oldContent);
-             pstmt.setInt(5, uId);
-
+             pstmt.setInt(3, dId);
+             pstmt.setInt(4, uId);
              int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

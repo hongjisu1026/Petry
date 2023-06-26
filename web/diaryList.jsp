@@ -499,7 +499,7 @@
                 <i class="fa-solid fa-bars menu-ic"><a href="#menu"></a></i>
                 <div class="overlay" id="menu">
                     <div class="menu">
-                        <a href="./diaryList.jsp" class="menu-ic-wrapper">
+                        <a href="./diaryList.do" class="menu-ic-wrapper">
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
@@ -518,21 +518,18 @@
         <a id="writeBtn" href="./diary.jsp">글쓰기</a>
         <div class="diary-wrapper">
             <c:forEach var="diary" items="${diary}" varStatus="status">
-                <c:forEach var="thumbnail" items="${thumbnail}" begin="${status.index}" end="${status.index}">
-                    <c:forEach var="album" items="${album}" begin="${status.index}" end="${status.index}">
-                        <div class="diary">
-                            <img class="diary-img" src="./assets/images/album/${thumbnail}">
-                            <div class="diary-content-wrapper">
-                                <p class="diary-title">
-                                    <a href="javascript:void(0)" onclick="ff('${album}', '${diary.dTitle}', '${diary.dContent}', ${diary.dId})">${diary.dTitle}</a>
-                                </p>
-                                <p class="diary-content">${diary.dContent}</p>
-                            </div>
+                <c:forEach var="album" items="${album}" begin="${status.index}" end="${status.index}">
+                    <div class="diary">
+                        <img class="diary-img" src="/LoadThumbnailCommand?dId=${diary.dId}">
+                        <div class="diary-content-wrapper">
+                            <p class="diary-title">
+                                <a href="javascript:void(0)" onclick="ff('${album}', '${diary.dTitle}', '${diary.dContent}', ${diary.dId})">${diary.dTitle}</a>
+                            </p>
+                            <p class="diary-content">${diary.dContent}</p>
                         </div>
-                    </c:forEach>
+                    </div>
                 </c:forEach>
             </c:forEach>
-            
         </div>
         <div class="detail-wrapper">
             <div class="detail">
@@ -565,6 +562,14 @@
     </div>
 </form>
 <script type="text/javascript">
+
+    $('.menu-ic').click(function (e) {
+        e.stopPropagation();
+        $('.menu').toggle();
+    });
+    $(document).click(function () {
+        $('.menu').hide();
+    });
     
 
     $('.fa-ellipsis').click(function (e) {
@@ -600,10 +605,8 @@
     
 
     function ff(album, dTitle, dContent, dId) {
-        console.log(dTitle);
-        console.log(dContent);
-        document.getElementById('edit').href = "./editDiary.jsp?dTitle=" + dTitle + "&dContent=" + dContent;
-        document.getElementById('delete').href = "./deleteDiary.jsp?dId=" + dId;
+        document.getElementById('edit').href = "./moveEditDiary.do?dId=" + dId;
+        document.getElementById('delete').href = "./deleteDiary.do?dId=" + dId;
 
         if ($('.slick-initialized').length !== 0) {
             $('.detail-img').slick('unslick');
@@ -612,9 +615,7 @@
         let list = album.split(" ");
         let html = '';
         for (let i = 0; i < list.length - 1; i++) {
-            console.log(list[i]);
-            console.log('<div class=\"img\"><img src=\"./assets/images/album/' + list[i] +'\"></div>');
-            html += '<div class=\"img\"><img src=\"./assets/images/album/' + list[i] +'\"></div>';
+            html += '<div class=\"img\"><img src=\"/LoadDiaryImageCommand?dId=' + dId +'&aName=' + list[i] + '\"></div>';
         }
         $('#detailTitle').html(dTitle);
         $('#detailContent').html(dContent);

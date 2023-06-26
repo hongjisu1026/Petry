@@ -1,6 +1,6 @@
 package com.petry.diary.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.diary.dao.DiaryDAO;
 import com.petry.user.dto.UserDTO;
 

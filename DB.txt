@@ -31,7 +31,8 @@ piName varchar(255),
 piOriName varchar(255),
 piPath varchar(255),
 piType varchar(255),
-piSize int
+piSize int,
+piImg blob
 );
 
 ===============================
@@ -56,6 +57,7 @@ aType varchar(255),
 aSize int,
 aUploadTime datetime default now(),
 aThumbnail int,
+aImg blob,
 dId int not null,
 uId int not null,
 foreign key (dId) references diary (dId),

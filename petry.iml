@@ -44,5 +44,8 @@
     </orderEntry>
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="slick" level="application" />
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" name="cos" level="project" />
+    <orderEntry type="library" name="commons-io-2.13.0" level="project" />
   </component>
 </module>

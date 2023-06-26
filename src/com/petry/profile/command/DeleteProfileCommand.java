@@ -1,9 +1,8 @@
 package com.petry.profile.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.profile.dao.ProfileDAO;
 import com.petry.profile.dto.ProfileDTO;
-import com.petry.profile.dto.ProfileImgDTO;
 import com.petry.user.dto.UserDTO;
 
 import javax.servlet.ServletException;
@@ -27,7 +26,7 @@ public class DeleteProfileCommand implements Command {
         dto.setpId(pId);
 
         String piName = dao.selectPiName(dto);
-        String piPath = "E:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
+        String piPath = "F:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
         File file = new File(piPath + "\\" + piName);
 
         if (file.exists()) {

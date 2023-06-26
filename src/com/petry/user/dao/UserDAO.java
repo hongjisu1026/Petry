@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class UserDAO {
     private static UserDAO userDAO = new UserDAO();
-    private final String TABLE_NAME = "user";
+    private final String USER = "user";
     private DataSource dataSource;
 
     private UserDAO() {
@@ -31,7 +31,7 @@ public class UserDAO {
     }
 
     public int registerOK(UserDTO dto) {
-        String SQL = "INSERT INTO " + TABLE_NAME + " (id, pwd, email, name, birth, nickname) VALUES (?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO " + USER + " (id, pwd, email, name, birth, nickname) VALUES (?, ?, ?, ?, ?, ?)";
         int result = 0;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -50,7 +50,7 @@ public class UserDAO {
     }
 
     public String checkPwd(UserDTO dto) {
-        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+        String SQL = "SELECT * FROM " + USER + " WHERE id = ?";
         String pwd = null;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -66,7 +66,7 @@ public class UserDAO {
     }
 
     public UserDTO loginOK(UserDTO dto) {
-        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ? AND pwd = ?";
+        String SQL = "SELECT * FROM " + USER + " WHERE id = ? AND pwd = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, dto.getId());
@@ -90,7 +90,7 @@ public class UserDAO {
     }
 
     public int checkId(String id) {
-        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+        String SQL = "SELECT * FROM " + USER + " WHERE id = ?";
         int check = 0;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -109,7 +109,7 @@ public class UserDAO {
     }
 
     public int checkEmail(String email) {
-        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+        String SQL = "SELECT * FROM " + USER + " WHERE email = ?";
         int check = 0;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -129,7 +129,7 @@ public class UserDAO {
 
     public String findId(String name, String email) {
         String id = null;
-        String SQL = "SELECT id FROM " + TABLE_NAME + " WHERE name = ? AND email = ?";
+        String SQL = "SELECT id FROM " + USER + " WHERE name = ? AND email = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setString(1, name);
@@ -150,7 +150,7 @@ public class UserDAO {
 
     public String findPwd(String id, String email) {
         String pwd = null;
-        String SQl = "SELECT pwd FROM " + TABLE_NAME + " WHERE id = ? AND email = ?";
+        String SQl = "SELECT pwd FROM " + USER + " WHERE id = ? AND email = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQl)) {
             pstmt.setString(1, id);
@@ -168,11 +168,67 @@ public class UserDAO {
     }
 
     public void deleteUser(int uId) {
-        String SQL = "DELETE FROM " + TABLE_NAME + " WHERE uId=?";
+        String SQL = "DELETE FROM " + USER + " WHERE uId=?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setInt(1, uId);
 
+            int result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public String checkPwd(int uId) {
+        String pwd = null;
+        String SQL = "SELECT * FROM " + USER + " WHERE uId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                pwd = rs.getString("pwd");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pwd;
+    }
+
+    public UserDTO selectUser(int uId) {
+        UserDTO dto = new UserDTO();
+        String SQL = "SELECT * FROM " + USER + " WHERE uId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                dto.setId(rs.getString("id"));
+                dto.setPwd(rs.getString("pwd"));
+                dto.setEmail(rs.getString("email"));
+                dto.setName(rs.getString("name"));
+                dto.setBirth(rs.getString("birth"));
+                dto.setNickname(rs.getString("nickname"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dto;
+    }
+
+    public void updateUser(UserDTO dto) {
+        String SQL = "UPDATE " + USER + " set pwd = ?, email = ?, name = ?, nickname = ? WHERE uId = ?";
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setString(1, dto.getPwd());
+            pstmt.setString(2, dto.getEmail());
+            pstmt.setString(3, dto.getName());
+            pstmt.setString(4, dto.getNickname());
+            pstmt.setInt(5, dto.getuId());
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

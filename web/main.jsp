@@ -378,7 +378,7 @@
                 <c:forEach var="profileImg" items="${profileImg}" varStatus="status">
                     <c:forEach var="profile" items="${profile}" begin="${status.index}" end="${status.index}">
                         <div class="profile">
-                            <img src="./assets/images/profile/${profileImg.piName}">
+                            <img src="/LoadProfileImageCommand?piId=${profileImg.piId}">
                             <p>${profile.pName} ${profile.pSex}</p>
                         </div>
                     </c:forEach>
@@ -395,7 +395,7 @@
             <div class="center">
                 <c:forEach var="current" items="${current}">
                     <div class="img">
-                        <img src="./assets/images/album/${current}">
+                        <img src="/LoadCurrentCommand?aName=${current}">
                     </div>
                 </c:forEach>
             </div>

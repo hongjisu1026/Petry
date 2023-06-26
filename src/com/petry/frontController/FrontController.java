@@ -1,6 +1,6 @@
 package com.petry.frontController;
 
-import com.petry.command.*;
+import com.petry.commonInterface.command.*;
 import com.petry.diary.command.*;
 import com.petry.profile.command.DeleteProfileCommand;
 import com.petry.profile.command.LoadProfileCommand;
@@ -45,14 +45,14 @@ public class FrontController extends HttpServlet {
             case "/register.do":
                 viewPage = "register.jsp";
             case "/registerOK.do":
-                command = new RegisterOKCommand();
+                command = new RegisterCommand();
                 command.excute(request, response);
                 viewPage = "index.jsp";
                 break;
             case "/index.do":
                 viewPage = "index.jsp";
             case "/login.do":
-                booleanCommand = new BooleanOKCommand();
+                booleanCommand = new LoginCommand();
                 boolean check = booleanCommand.excute(request, response);
                 if (check) {
                     viewPage = "main.jsp";
@@ -65,7 +65,7 @@ public class FrontController extends HttpServlet {
                 }
                 break;
             case "/findId.do":
-                stringCommand = new StringIdCommand();
+                stringCommand = new FindIdCommand();
                 String id = stringCommand.excute(request, response);
                 if (id != null) {
                     request.setAttribute("info", id);
@@ -75,7 +75,7 @@ public class FrontController extends HttpServlet {
                 }
                 break;
             case "/findPwd.do":
-                stringCommand = new StringPwdCommand();
+                stringCommand = new FindPwdCommand();
                 String pwd = stringCommand.excute(request, response);
                 if (pwd != null) {
                     request.setAttribute("info", pwd);
@@ -93,6 +93,25 @@ public class FrontController extends HttpServlet {
                 command = new DeleteCommand();
                 command.excute(request, response);
                 viewPage = "index.jsp";
+                break;
+            case "/moveEdit.do":
+                booleanCommand = new MoveEditCommand();
+                boolean result = booleanCommand.excute(request, response);
+                System.out.println(result);
+                if (result) {
+                    viewPage = "edit.jsp";
+                } else {
+                    viewPage = "editError.jsp";
+                }
+                break;
+            case "/edit.do":
+                command = new EditCommand();
+                command.excute(request, response);
+                command = new LoadProfileCommand();
+                command.excute(request, response);
+                command = new CurrentAlbumCommand();
+                command.excute(request, response);
+                viewPage = "main.jsp";
                 break;
             case "/main.do":
                 command = new LoadProfileCommand();
@@ -121,7 +140,7 @@ public class FrontController extends HttpServlet {
                 viewPage = "profileList.jsp";
                 break;
             case "/diary.do":
-                command = new DiaryCommand();
+                command = new CreateDiaryCommand();
                 command.excute(request, response);
                 command = new LoadDiaryCommand();
                 command.excute(request, response);
@@ -138,6 +157,11 @@ public class FrontController extends HttpServlet {
                 command = new LoadDiaryCommand();
                 command.excute(request, response);
                 viewPage = "diaryList.jsp";
+                break;
+            case "/moveEditDiary.do":
+                command = new MoveEditDiaryCommand();
+                command.excute(request, response);
+                viewPage = "editDiary.jsp";
                 break;
             case "/editDiary.do":
                 command = new EditDiaryCommand();

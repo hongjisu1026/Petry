@@ -523,7 +523,7 @@
 
                         </div>
                     </div>
-                    <input type="file" name="diaryImg" id="diaryImg" accept=".png, .jpeg, .jpg" multiple>
+                    <input type="file" name="aImg" id="aImg" accept=".png, .jpeg, .jpg" multiple>
                     <input type="submit" class="submit" value="작성" formaction="diary.do">
                 </div>
                 
@@ -547,7 +547,7 @@
 
 
     $(document).ready(function () {
-        $('#diaryImg').on('change', prevImg);
+        $('#aImg').on('change', prevImg);
     });
 
     function prevImg(e) {
@@ -556,14 +556,14 @@
 
         if (filesArr.length > 10) {
             alert('파일은 최대 10개까지 업로드 할 수 있습니다.');
-            $('#diaryImg').val("");
+            $('#aImg').val("");
             return;
         } else {
             let index = 0;
             filesArr.forEach(function (f) {
                 if (!f.type.match("image.*")) {
                     alert('이미지만 업로드 할 수 있습니다.');
-                    $('#diaryImg').val("");
+                    $('#aImg').val("");
                     return;
                 }
                 sel_file.push(f);
@@ -584,7 +584,7 @@
         $('.img').eq(index).remove();
 
         const dt = new DataTransfer();
-        let files = $('#diaryImg')[0].files;
+        let files = $('#aImg')[0].files;
         let fileArr = Array.from(files);
         fileArr.splice(index, 1);
 
@@ -592,7 +592,7 @@
             dt.items.add(file);
         });
 
-        $('#diaryImg')[0].files = dt.files;
+        $('#aImg')[0].files = dt.files;
     }
 
 </script>

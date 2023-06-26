@@ -1,7 +1,6 @@
 package com.petry.user.command;
 
-import com.petry.command.Command;
-import com.petry.user.dto.UserDTO;
+import com.petry.commonInterface.command.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -1,8 +1,7 @@
 package com.petry.diary.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.diary.dao.DiaryDAO;
-import com.petry.diary.dto.AlbumDTO;
 import com.petry.diary.dto.DiaryDTO;
 import com.petry.user.dto.UserDTO;
 
@@ -22,19 +21,16 @@ public class LoadDiaryCommand implements Command {
         int uId = ((UserDTO) session.getAttribute("userInfo")).getuId();
 
         ArrayList<DiaryDTO> diary = dao.selectAllDiary(uId);
-        ArrayList<String> thumbnail = new ArrayList<>();
         ArrayList<String> album = new ArrayList<>();
 
         for (DiaryDTO dto : diary) {
             int dId = dao.selectdId(dto);
             dto.setdId(dId);
-            thumbnail.add(dao.selectThumbnailImg(dId));
             album.add(dao.selectDiaryImg(dId));
             System.out.println(dao.selectDiaryImg(dId));
         }
 
         request.setAttribute("diary", diary);
-        request.setAttribute("thumbnail", thumbnail);
         request.setAttribute("album", album);
     }
 }

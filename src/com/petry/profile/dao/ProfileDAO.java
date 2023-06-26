@@ -2,16 +2,27 @@ package com.petry.profile.dao;
 
 import com.petry.profile.dto.ProfileDTO;
 import com.petry.profile.dto.ProfileImgDTO;
+import org.apache.commons.io.FileUtils;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class ProfileDAO {
     private static ProfileDAO profileDAO = new ProfileDAO();
@@ -51,18 +62,23 @@ public class ProfileDAO {
     }
 
     public int insertProfileImg(ProfileImgDTO dto) {
-        String SQL = "INSERT INTO " + PROFILE_IMG + " (piName, piOriName, piPath, piType, piSize) VALUES (?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO " + PROFILE_IMG + " (piName, piOriName, piPath, piType, piSize, piImg) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            byte[] bytes = FileUtils.readFileToByteArray(dto.getPiImg());
+
             pstmt.setString(1, dto.getPiName());
             pstmt.setString(2, dto.getPiOriName());
             pstmt.setString(3, dto.getPiPath());
             pstmt.setString(4, dto.getPiType());
             pstmt.setLong(5, dto.getPiSize());
+            pstmt.setBytes(6, bytes);
 
             int result = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return selectPiIdToPiName(dto);
     }
@@ -91,7 +107,7 @@ public class ProfileDAO {
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-            pstmt.setInt(1, uId);;
+            pstmt.setInt(1, uId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -124,6 +140,8 @@ public class ProfileDAO {
                 dto.setPiPath(rs.getString("piPath"));
                 dto.setPiType(rs.getString("piType"));
                 dto.setPiSize(rs.getLong("piSize"));
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

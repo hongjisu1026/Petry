@@ -271,15 +271,98 @@
             text-decoration: none;
         }
 
-        #temp, .submit {
+        #temp {
             display: none;
+        }
+
+        input {
+            display: block;
+            height: 30px;
+            width: 290px;
+            margin-bottom: 15px;
+            margin-left: 1px;
+            border: solid 1px #bbb;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #F2C8B0;
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        .submit {
+            font-family: 'Cafe24SsurroundAir';
+            width: 150px;
+            border: solid 1px #F2C8B0;
+            background-color: #fff;
+            border-radius: 7px;
+            margin: auto;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .submit:hover {
+            background-color: #F2C8B0;
+        }
+
+        .popup-overlay {
+            display: none;
+            z-index: 10000;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        .confirm {
+            position: absolute;
+            background-color: white;
+            width: 400px;
+            text-align: center;
+            padding: 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: solid #F2C8B0 1px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .confirm p {
+            margin-bottom: 20px;
+            color: #F2C8B0;
+            font-size: 1.5em;
+        }
+
+        #edit input {
+            margin: auto;
+        }
+
+        #edit input[type="submit"] {
+            width: 305px;
+            margin: 10px;
+        }
+
+        .fa-xmark {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
 <form method="post">
-    <input type="submit" id="temp" formaction="setting.do">
+    <input type="submit" id="temp">
     <div class="wrapper">
         <div class="header">
             <div class="logo">
@@ -306,10 +389,25 @@
         <div class="content-wrapper">
             <ul>
                 <li><a href="./profileList.do">프로필</a></li>
-                <li><a href="">정보 수정</a></li>
+                <li><a onclick="editPopup()">정보 수정</a></li>
                 <li><a href="./logout.do" id="logoutBtn">로그아웃</a></li>
-                <li><a href="./delete.do">회원 탈퇴</a></li>
+                <li><a href="#delete" onclick="deletePopup()">회원 탈퇴</a></li>
             </ul>
+        </div>
+        <div class="popup-overlay" id="delete">
+            <div class="confirm">
+                <p>정말 탈퇴하시겠습니까?</p>
+                <input type="submit" id="deleteBtn" class="submit" formaction="delete.do" value="예">
+                <input type="button" value="아니오" id="no" class="submit">
+            </div>
+        </div>
+        <div class="popup-overlay" id="edit">
+            <div class="confirm">
+                <p>비밀번호 확인</p>
+                <i class="fa-solid fa-xmark"></i>
+                <input type="password" id="check_pwd" name="check_pwd" placeholder="비밀번호 입력">
+                <input type="submit" class="submit" value="확인" formaction="moveEdit.do">
+            </div>
         </div>
         <div class="footer">
             <p>푸터입니다</p>
@@ -324,6 +422,29 @@
     });
     $(document).click(function () {
         $('.menu').hide();
+    });
+
+    function deletePopup() {
+        $('#delete').addClass('show');
+    }
+
+    function editPopup() {
+        $('#edit').addClass('show');
+    }
+
+    $('#no').click(function () {
+        $('.popup-overlay').removeClass('show');
+    });
+
+    $('.fa-xmark').click(function () {
+        $('.popup-overlay').removeClass('show');
+    });
+
+    $(document).mouseup(function (e) {
+        const overlay = $('.popup-overlay');
+        if (overlay.has(e.target).length === 0) {
+            overlay.removeClass('show');
+        }
     });
 </script>
 </body>

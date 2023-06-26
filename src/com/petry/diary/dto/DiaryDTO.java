@@ -3,11 +3,11 @@ package com.petry.diary.dto;
 import java.sql.Timestamp;
 
 public class DiaryDTO {
-    int dId;
-    int uId;
-    String dTitle;
-    String dContent;
-    Timestamp dUploadTime;
+    private int dId;
+    private int uId;
+    private String dTitle;
+    private String dContent;
+    private Timestamp dUploadTime;
 
     public int getdId() {
         return dId;

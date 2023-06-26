@@ -1,3 +1,4 @@
+<%@ page import="com.petry.diary.command.MoveEditDiaryCommand" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -480,7 +481,7 @@
     </style>
 </head>
 
-<body onload="start()">
+<body>
 <form method="post">
     <div class="wrapper">
         <div class="header">
@@ -508,14 +509,13 @@
             </div>
         </div>
         <div class="content-wrapper">
+            <input type="text" id="dId" name="dId" value="${dId}" style="display: none">
             <div class="input-wrapper">
                 <div class="title">
-                    <input type="text" id="dTitle" name="dTitle" style="display: none">
-                    <input type="text" id="diaryTitle" name="diaryTitle" placeholder="제목을 입력해주세요.">
+                    <input type="text" id="diaryTitle" name="diaryTitle" value="${dTitle}">
                 </div>
                 <div class="content">
-                    <textarea id="dContent" name="dContent" style="display: none"></textarea>
-                    <textarea id="diaryContent" name="diaryContent"></textarea>
+                    <textarea id="diaryContent" name="diaryContent">${dContent}</textarea>
                 </div>
                 <input type="submit" class="submit" value="작성" formaction="editDiary.do">
             </div>
@@ -534,23 +534,6 @@
     $(document).click(function () {
         $('.menu').hide();
     });
-
-    function start() {
-        let url = window.location.href;
-        url = url.split('?')[1];
-        let dTitle = url.split('&')[0];
-        dTitle = dTitle.split('=')[1];
-        let dContent = url.split('&')[1];
-        dContent = dContent.split('=')[1];
-
-        console.log(dTitle);
-        console.log(dContent);
-
-        $('#dTitle').attr('value', dTitle);
-        $('#diaryTitle').attr("value", dTitle);
-        $('#dContent').html(dContent);
-        $('#diaryContent').html(dContent);
-    }
 
 </script>
 </body>

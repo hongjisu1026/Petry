@@ -1,18 +1,21 @@
 package com.petry.diary.dto;
 
+import java.io.File;
 import java.sql.Timestamp;
 
 public class AlbumDTO {
-    int aId;
-    int dId;
-    int uId;
-    String aName;
-    String aOriName;
-    String aPath;
-    String aType;
-    long aSize;
-    Timestamp aUploadTime;
-    int aThumbnail;
+    private int aId;
+    private int dId;
+    private int uId;
+    private String aName;
+    private String aOriName;
+    private String aPath;
+    private String aType;
+    private long aSize;
+    private Timestamp aUploadTime;
+    private int aThumbnail;
+    private File aImg;
+
 
     public int getaId() {
         return aId;
@@ -92,5 +95,13 @@ public class AlbumDTO {
 
     public void setaThumbnail(int aThumbnail) {
         this.aThumbnail = aThumbnail;
+    }
+
+    public File getaImg() {
+        return aImg;
+    }
+
+    public void setaImg(File aImg) {
+        this.aImg = aImg;
     }
 }

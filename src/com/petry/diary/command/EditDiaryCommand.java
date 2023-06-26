@@ -1,6 +1,6 @@
 package com.petry.diary.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.diary.dao.DiaryDAO;
 import com.petry.user.dto.UserDTO;
 
@@ -17,11 +17,11 @@ public class EditDiaryCommand implements Command {
         DiaryDAO dao = DiaryDAO.getDiaryDAO();
         HttpSession session = request.getSession();
         int uId = ((UserDTO) session.getAttribute("userInfo")).getuId();
-        String oldTitle = request.getParameter("dTitle");
+        int dId = Integer.parseInt(request.getParameter("dId"));
         String newTitle = request.getParameter("diaryTitle");
-        String oldContent = request.getParameter("dContent");
         String newContent = request.getParameter("diaryContent");
+        System.out.println(dId);
 
-        dao.updateDiary(oldTitle, oldContent, newTitle, newContent, uId);
+        dao.updateDiary(dId, uId, newTitle, newContent);
     }
 }

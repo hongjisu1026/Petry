@@ -398,17 +398,15 @@
                     <div class="profiles">
                         <c:forEach var="profile" items="${profile}" varStatus="status">
                             <div class="profile-wrapper">
-                                <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}"
-                                           end="${status.index}">
-                                    <img class="pImg" src="<%=request.getContextPath()%>/assets/images/profile/${profileImg.piName}">
+                                <c:forEach var="profileImg" items="${profileImg}" begin="${status.index}" end="${status.index}">
+                                    <img class="pImg" src="/LoadProfileImageCommand?piId=${profileImg.piId}">
                                 </c:forEach>
                                 <div class="p-wrapper">
                                     <p class="pName">${profile.pName}</p>
                                     <p class="pSex">${profile.pSex}</p>
                                     <p class="pBirth">${profile.pBirth}</p>
                                 </div>
-                                <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i
-                                    class="fa-solid fa-minus"></i></a>
+                                <a href="#popup" id="btnDelete" onclick="popup('${profile.pId}');"><i class="fa-solid fa-minus"></i></a>
                             </div>
                         </c:forEach>
                     </div>
@@ -444,10 +442,6 @@
 
             document.getElementById('pId').value = pId;
             test()
-        }
-
-        function test() {
-            console.log(document.getElementById('pId').value);
         }
 
         $('#no').click(function () {

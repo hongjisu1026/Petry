@@ -1,5 +1,7 @@
 package com.petry.profile.dto;
 
+import java.io.File;
+
 public class ProfileImgDTO {
     private int piId;
     private String piName;
@@ -7,6 +9,7 @@ public class ProfileImgDTO {
     private String piPath;
     private String piType;
     private long piSize;
+    private File piImg;
 
 
     public int getPiId() {
@@ -55,5 +58,13 @@ public class ProfileImgDTO {
 
     public void setPiSize(long piSize) {
         this.piSize = piSize;
+    }
+
+    public File getPiImg() {
+        return piImg;
+    }
+
+    public void setPiImg(File piImg) {
+        this.piImg = piImg;
     }
 }

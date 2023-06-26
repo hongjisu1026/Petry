@@ -1,7 +1,7 @@
 package com.petry.profile.command;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.profile.Service.MyFileRenamePolicy;
 import com.petry.profile.dao.ProfileDAO;
 import com.petry.profile.dto.ProfileDTO;
@@ -31,9 +31,10 @@ public class ProfileCommand implements Command {
         String piName = "";
         String piOriName = "";
         String piType = "";
-        String realPath = "E:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
+        String realPath = "F:\\JavaStudy\\Project\\petry\\web\\assets\\images\\profile";
         String piPath = "";
         long piSize = 0;
+        File file = null;
 
         MultipartRequest mr = new MultipartRequest(request, realPath, 1024*1024*1024, "utf-8", new MyFileRenamePolicy());
         System.out.println("경로 : " + realPath);
@@ -45,7 +46,8 @@ public class ProfileCommand implements Command {
             piOriName = mr.getOriginalFileName(element);
             piType = mr.getContentType(element).split("/")[1];
             piSize = mr.getFile(element).length();
-            piPath = realPath + File.separator + mr.getFilesystemName(element);
+            piPath = realPath + File.separator + piName;
+            file = mr.getFile("pImg");
         }
 
         System.out.println(piName + " " + piType + " " + piSize);
@@ -55,6 +57,7 @@ public class ProfileCommand implements Command {
         imgDTO.setPiPath(piPath);
         imgDTO.setPiType(piType);
         imgDTO.setPiSize(piSize);
+        imgDTO.setPiImg(file);
 
         int piId = dao.insertProfileImg(imgDTO);
 

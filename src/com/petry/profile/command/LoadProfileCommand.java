@@ -1,6 +1,6 @@
 package com.petry.profile.command;
 
-import com.petry.command.Command;
+import com.petry.commonInterface.command.Command;
 import com.petry.profile.dao.ProfileDAO;
 import com.petry.profile.dto.ProfileDTO;
 import com.petry.profile.dto.ProfileImgDTO;
@@ -28,14 +28,6 @@ public class LoadProfileCommand implements Command {
         for (ProfileDTO profiles : profile) {
             int piId = profiles.getPiId();
             profileImg.add(dao.selectProfileImg(piId));
-        }
-
-        for (ProfileDTO p : profile) {
-            System.out.println(p.getpId());
-        }
-        System.out.println("================");
-        for (ProfileImgDTO p : profileImg) {
-            System.out.println(p.getPiName());
         }
 
         request.setAttribute("profile", profile);
