@@ -1,6 +1,5 @@
-package com.petry.diary.command;
+package com.petry.diary.command.imageCommand;
 
-import com.petry.user.dao.UserDAO;
 import com.petry.user.dto.UserDTO;
 
 import javax.naming.Context;
@@ -16,12 +15,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 
-@WebServlet(name = "LoadDiaryImageCommand", value = "/LoadDiaryImageCommand")
-public class LoadDiaryImageCommand extends HttpServlet {
+@WebServlet(name = "LoadThumbnailCommand", value = "/LoadThumbnailCommand")
+public class LoadThumbnailCommand extends HttpServlet {
     private DataSource dataSource;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,18 +33,15 @@ public class LoadDiaryImageCommand extends HttpServlet {
         HttpSession session = request.getSession();
         int uId = ((UserDTO)session.getAttribute("userInfo")).getuId();
         int dId = Integer.parseInt(request.getParameter("dId"));
-        String aName = request.getParameter("aName");
-        String SQL = "SELECT * FROM album WHERE dId = ? AND uId = ? AND aName = ?";
+        String SQL = "SELECT * FROM album WHERE dId = ? AND uId = ? AND aThumbnail = 1";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setInt(1, dId);
             pstmt.setInt(2, uId);
-            pstmt.setString(3, aName);
 
             ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
+            if (rs.next()) {
                 aType = rs.getString("aType");
                 is = rs.getBinaryStream("aImg");
                 response.setContentType("image/" + aType);

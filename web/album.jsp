@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -164,10 +165,11 @@
 
         body {
             font-family: 'Cafe24SsurroundAir';
+            width: calc(100vw);
+            min-height: calc(100vh - 100px);
         }
 
         .wrapper {
-            width: calc(100vw - 17px);
             min-height: calc(100vh - 100px);
             position: relative;
         }
@@ -190,6 +192,7 @@
 
         .menu-wrapper {
             position: relative;
+            
         }
 
         .menu-ic {
@@ -209,6 +212,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -244,11 +248,18 @@
         }
 
         .footer {
-            position: absolute;
-            bottom: -150px;
+            position: relative;
             width: 100%;
             height: 100px;
             background-color: #ccc;
+        }
+
+        .footer p {
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+            line-height: 100px;
         }
 
         #temp {
@@ -269,6 +280,11 @@
         .img img {
             width: 300px;
             height: 300px;
+        }
+
+        .img:hover {
+            transform: scale(1.2);
+            transition: all 0.5s linear;
         }
     </style>
 </head>
@@ -300,14 +316,15 @@
             </div>
         </div>
         <div class="content-wrapper">
-            <div class="img">
-                <img src="./assets/images/lulu.jpg">
-            </div>
-
+            <c:forEach var="album" items="${album}">
+                <div class="img">
+                    <a href="./diaryDetail.do?dId=${album.dId}"><img src="/LoadAlbumImageCommand?aId=${album.aId}"> </a>
+                </div>
+            </c:forEach>
         </div>
-        <div class="footer">
-            <p>푸터입니다</p>
-        </div>
+    </div>
+    <div class="footer">
+        <p>ⓒ petry</p>
     </div>
 </form>
 <script type="text/javascript">

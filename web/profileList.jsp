@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -165,12 +166,12 @@
         body {
             position: relative;
             font-family: 'Cafe24SsurroundAir';
+            width: 100vw;
+            min-height: calc(100vh - 100px);
         }
 
         .wrapper {
-            width: 100vw;
-            min-height: 100vh;
-            position: relative;
+            min-height: calc(100vh - 100px);
         }
 
         .header {
@@ -210,6 +211,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -245,11 +247,17 @@
         }
 
         .footer {
-            position: absolute;
-            bottom: 0;
             width: 100%;
             height: 100px;
             background-color: #ccc;
+        }
+
+        .footer p {
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+            line-height: 100px;
         }
 
         img {
@@ -381,7 +389,7 @@
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
-                        <a href="./album.jsp" class="menu-ic-wrapper">
+                        <a href="./album.do" class="menu-ic-wrapper">
                             <i class="fa-solid fa-image"></i>
                             <p>앨범</p>
                         </a>
@@ -412,9 +420,7 @@
                     </div>
                 </div>
             </form>
-            <div class="footer">
-                <p>푸터입니다</p>
-            </div>
+        
             <form method="post">
                 <div class="popup-overlay" id="popup">
                     <div class="delete-wrapper">
@@ -426,6 +432,9 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="footer">
+            <p>ⓒ petry</p>
         </div>
     <script type="text/javascript">
         $('.menu-ic').click(function (e) {

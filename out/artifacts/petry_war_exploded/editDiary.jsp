@@ -1,4 +1,3 @@
-<%@ page import="com.petry.diary.command.MoveEditDiaryCommand" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -12,6 +11,7 @@
     <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -217,6 +217,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -252,8 +253,14 @@
             width: 100%;
             height: 100px;
             background-color: #ccc;
-            position: relative;
-            transform: translateY(calc(-100% + 200px));
+        }
+
+        .footer p {
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+            line-height: 100px;
         }
 
         #temp {
@@ -496,7 +503,7 @@
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
-                        <a href="./album.jsp" class="menu-ic-wrapper">
+                        <a href="./album.do" class="menu-ic-wrapper">
                             <i class="fa-solid fa-image"></i>
                             <p>앨범</p>
                         </a>
@@ -522,7 +529,7 @@
         </div>
     </div>
     <div class="footer">
-        <p>푸터입니다</p>
+        <p>ⓒ petry</p>
     </div>
 </form>
 <script type="text/javascript">

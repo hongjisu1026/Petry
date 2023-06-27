@@ -170,6 +170,16 @@ public class FrontController extends HttpServlet {
                 command.excute(request, response);
                 viewPage = "diaryList.jsp";
                 break;
+            case "/album.do":
+                command = new LoadAlbumCommand();
+                command.excute(request, response);
+                viewPage = "album.jsp";
+                break;
+            case "/diaryDetail.do":
+                command = new DiaryDetailCommand();
+                command.excute(request, response);
+                viewPage = "diaryDetail.jsp";
+                break;
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

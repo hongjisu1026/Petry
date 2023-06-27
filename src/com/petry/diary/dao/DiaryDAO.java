@@ -205,4 +205,25 @@ public class DiaryDAO {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<AlbumDTO> selectAllDiaryImg(int uId) {
+        ArrayList<AlbumDTO> list = new ArrayList<>();
+        String SQL = "SELECT * FROM " + ALBUM + " WHERE uId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                AlbumDTO dto = new AlbumDTO();
+                dto.setdId(rs.getInt("dId"));
+                dto.setaId(rs.getInt("aId"));
+
+                list.add(dto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

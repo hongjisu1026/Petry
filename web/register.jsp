@@ -10,6 +10,7 @@
     <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -167,17 +168,15 @@
             font-family: 'Cafe24SsurroundAir';
             position: relative;
             width: calc(100vw - 19px);
-            height: calc(100vh + 120px);
-            margin: 0;
-            padding: 30px 0;
-            padding-bottom: 30px;
+            height: 100vh;
         }
 
         .wrapper {
             position: absolute;
             border-radius: 10px;
             left: 50%;
-            transform: translateX(-50%);
+            top:  50%;
+            transform: translate(-50%, -50%);
             border: solid 3px #F2C8B0;
             padding: 20px 70px;
         }
@@ -277,7 +276,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="회원가입" id="submit">
+                        <button id="submit">회원가입</button>
                     </td>
                 </tr>
             </table>
@@ -415,6 +414,8 @@
             console.log(isRight);
             if (!isRight) {
                 return false;
+            } else {
+                $('#form').submit();
             }
         });
     });

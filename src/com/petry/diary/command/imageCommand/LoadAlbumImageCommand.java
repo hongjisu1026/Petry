@@ -1,4 +1,4 @@
-package com.petry.diary.command;
+package com.petry.diary.command.imageCommand;
 
 import com.petry.user.dto.UserDTO;
 
@@ -16,8 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "LoadCurrentCommand", value = "/LoadCurrentCommand")
-public class LoadCurrentCommand extends HttpServlet {
+@WebServlet(name = "LoadAlbumImageCommand", value = "/LoadAlbumImageCommand")
+public class LoadAlbumImageCommand extends HttpServlet {
     private DataSource dataSource;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,19 +32,20 @@ public class LoadCurrentCommand extends HttpServlet {
         String aType = null;
         HttpSession session = request.getSession();
         int uId = ((UserDTO)session.getAttribute("userInfo")).getuId();
-        String aName = request.getParameter("aName");
-        String SQL = "SELECT * FROM album WHERE uId = ? AND aName = ?";
+        int aId = Integer.parseInt(request.getParameter("aId"));
+        System.out.println(aId);
+        String SQL = "SELECT * FROM album WHERE uId = ? AND aId = ?";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
             pstmt.setInt(1, uId);
-            pstmt.setString(2, aName);
+            pstmt.setInt(2, aId);
 
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
+
+            if (rs.next()) {
                 aType = rs.getString("aType");
                 is = rs.getBinaryStream("aImg");
-                System.out.println(rs.getString("aName"));
                 response.setContentType("image/" + aType);
                 ServletOutputStream os = response.getOutputStream();
                 int binaryRead;
@@ -55,10 +56,5 @@ public class LoadCurrentCommand extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

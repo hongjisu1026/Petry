@@ -11,6 +11,7 @@
     <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -166,10 +167,11 @@
 
         body {
             font-family: 'Cafe24SsurroundAir';
+            width: calc(100vw);
+            min-height: calc(100vh - 100px);
         }
 
         .wrapper {
-            width: calc(100vw - 17px);
             min-height: calc(100vh - 100px);
         }
 
@@ -252,8 +254,13 @@
             width: 100%;
             height: 100px;
             background-color: #ccc;
-            position: relative;
-            transform: translateY(747%);
+        }
+
+        .footer p {
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+            line-height: 100px;
         }
 
         #temp {
@@ -295,11 +302,17 @@
         
         .diary-content-wrapper {
             margin-left: 10px;
+            width: 750px;
         }
 
         .diary-title {
             font-size: 1.7em;
             margin-bottom: 15px;
+            width: 750px;
+            height: 30px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .diary-title a {
@@ -315,14 +328,15 @@
 
         .diary-content {
             font-size: 1.3em;
+            width: 750px;
+            height: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .diary {
             margin-top: 30px;
-        }
-
-        .wrapper, .footer {
-            display: block;
         }
 
 
@@ -435,6 +449,9 @@
             border-radius: 7px;
             margin: 10px;
             padding: 5px;
+            text-decoration: none;
+            color: black;
+            font-weight: normal;
         }
 
         .submit:hover {
@@ -503,7 +520,7 @@
                             <i class="fa-solid fa-book-bookmark"></i>
                             <p>다이어리</p>
                         </a>
-                        <a href="./album.jsp" class="menu-ic-wrapper">
+                        <a href="./album.do" class="menu-ic-wrapper">
                             <i class="fa-solid fa-image"></i>
                             <p>앨범</p>
                         </a>
@@ -556,9 +573,9 @@
                 <input type="button" value="아니오" id="no" class="submit">
             </div>
         </div>
-    <div class="footer">
-        <p>푸터입니다</p>
     </div>
+    <div class="footer">
+        <p>ⓒ petry</p>
     </div>
 </form>
 <script type="text/javascript">

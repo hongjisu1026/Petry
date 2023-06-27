@@ -11,6 +11,7 @@
     <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -166,18 +167,18 @@
 
         body {
             font-family: 'Cafe24SsurroundAir';
-        }
-
-        .wrapper {
-            width: calc(100vw - 17px);
+            width: calc(100vw);
             min-height: calc(100vh - 100px);
-            position: relative;
         }
 
         .header {
             position: relative;
             width: 100%;
             height: 80px;
+        }
+
+        .wrapper {
+            min-height: calc(100vh - 100px);
         }
 
         .logo {
@@ -217,6 +218,7 @@
         .menu {
             display: none;
             border: solid 1px #F2C8B0;
+            background-color: white;
             position: absolute;
             width: 300px;
             right: 30px;
@@ -249,11 +251,17 @@
         }
 
         .footer {
-            position: absolute;
-            bottom: -130px;
             width: 100%;
             height: 100px;
             background-color: #ccc;
+        }
+
+        .footer p {
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+            line-height: 100px;
         }
 
         .content-wrapper {
@@ -303,7 +311,7 @@
 
         .img-wrapper {
             padding: 30px 0;
-            margin-top: 20px;
+            margin-top: 70px;
         }
 
         .img {
@@ -360,7 +368,7 @@
                         <i class="fa-solid fa-book-bookmark"></i>
                         <p>다이어리</p>
                     </a>
-                    <a href="./album.jsp" class="menu-ic-wrapper">
+                    <a href="./album.do" class="menu-ic-wrapper">
                         <i class="fa-solid fa-image"></i>
                         <p>앨범</p>
                     </a>
@@ -401,9 +409,9 @@
             </div>
         </div>
     </div>
-    <div class="footer">
-        <p>푸터입니다</p>
-    </div>
+</div>
+<div class="footer">
+    <p>ⓒ petry</p>
 </div>
 <script type="text/javascript">
     (() => {

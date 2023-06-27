@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
@@ -165,7 +166,6 @@
         body {
             font-family: 'Cafe24SsurroundAir';
             overflow: hidden;
-            position: relative;
             width: 100vw;
             height: 100vh;
         }
@@ -196,7 +196,7 @@
         }
 
         .img-wrapper img {
-            height: 935px;
+            height: 100%;
             width: 100%;
         }
 
@@ -374,25 +374,6 @@
     $(document).on("click", "#btn_findPwd", function () {
         const target = $(this).attr("href");
         $(target).addClass('show');
-    });
-
-    $(function () {
-        $("#loginBtn").click(function () {
-            let isRight = true;
-            $("#form").find("input").each(function (index, item) {
-                if ($(this).val().trim() === '') {
-                    alert($(this).attr("data-name") + " 항목을 입력하세요.");
-                    return false;
-                }
-            });
-
-            if (!isRight) {
-                return;
-            }
-
-            $(this).prop("disabled", true);
-            $(this).prop("disabled", false);
-        });
     });
 
 </script>

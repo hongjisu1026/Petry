@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8908bd1bc0.js" crossorigin="anonymous"></script>
     <script src="./js/jquery.js"></script>
+    <link rel="icon" href="./assets/favicon.png">
     <title>Petry</title>
 </head>
 <body>

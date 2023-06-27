@@ -1,4 +1,6 @@
-package com.petry.profile.command;
+package com.petry.diary.command.imageCommand;
+
+import com.petry.user.dto.UserDTO;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,8 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "LoadProfileImageCommand", value = "/LoadProfileImageCommand")
-public class LoadProfileImageCommand extends HttpServlet {
+@WebServlet(name = "LoadCurrentCommand", value = "/LoadCurrentCommand")
+public class LoadCurrentCommand extends HttpServlet {
     private DataSource dataSource;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,19 +29,23 @@ public class LoadProfileImageCommand extends HttpServlet {
         }
 
         InputStream is = null;
-        String piType = null;
-        int piId = Integer.parseInt(request.getParameter("piId"));
-        String SQL = "SELECT * FROM profileImg WHERE piId = ?";
+        String aType = null;
+        HttpSession session = request.getSession();
+        int uId = ((UserDTO)session.getAttribute("userInfo")).getuId();
+        String aName = request.getParameter("aName");
+        String SQL = "SELECT * FROM album WHERE uId = ? AND aName = ?";
 
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-            pstmt.setInt(1, piId);
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            pstmt.setInt(1, uId);
+            pstmt.setString(2, aName);
 
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                piType = rs.getString("piType");
-                is = rs.getBinaryStream("piImg");
-                response.setContentType("image/" + piType);
+            while (rs.next()) {
+                aType = rs.getString("aType");
+                is = rs.getBinaryStream("aImg");
+                System.out.println(rs.getString("aName"));
+                response.setContentType("image/" + aType);
                 ServletOutputStream os = response.getOutputStream();
                 int binaryRead;
                 while ((binaryRead = is.read()) != -1) {
